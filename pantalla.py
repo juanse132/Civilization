@@ -3,6 +3,7 @@ from sys import exit
 from pygame import time
 from random import randint
 import numpy as np
+from pygame.constants import MOUSEBUTTONDOWN
 
 
 anchoCelda = 20
@@ -33,6 +34,9 @@ fila = 60
 maxNegativa = 0
 maxPositiva = 30
 
+
+clicking = False
+rightClicking = False
 
 def crear_mapa(fila, columna, valor):
     """Se crea la matriz para el mapa del juego"""
@@ -95,10 +99,12 @@ posY = 60 // 2
 
 while True:
     for event in pygame.event.get():
+        rightClicking = False
+        mx, my = pygame.mouse.get_pos()
+
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 posY -= 2
@@ -116,7 +122,19 @@ while True:
                 posX += 2
                 if posX >= maxPositiva:
                     posX = maxPositiva
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1: 
+                clicking = True
+                if clicking:
+                    posXMouse = mx
+                    posYMouse = my
+            elif event.button == 3: 
+                rightClicking = True
+                if rightClicking:
+                    posXMouse = mx
+                    posYMouse = my
+                    if posXMouse == mx and posYMouse == my:
+                        screen.blit(hombreScaled, (posXMouse, posYMouse))
     forY = 0
 
     for y in range(posY - (celdasVertical // 2), posY + (celdasVertical // 2)):
