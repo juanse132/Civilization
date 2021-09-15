@@ -30,6 +30,9 @@ altoFoto = 20
 
 columna = 60
 fila = 60
+maxNegativa = 0
+maxPositiva = 30
+
 
 def crear_mapa(fila, columna, valor):
     """Se crea la matriz para el mapa del juego"""
@@ -99,12 +102,20 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 posY -= 2
+                if posY <= maxNegativa:
+                    posY = maxNegativa
             if event.key == pygame.K_DOWN:
                 posY += 2
+                if posY >= maxPositiva:
+                    posY = maxPositiva
             if event.key == pygame.K_LEFT:
                 posX -= 2
+                if posX <= maxNegativa:
+                    posX = maxNegativa
             if event.key == pygame.K_RIGHT:
                 posX += 2
+                if posX >= maxPositiva:
+                    posX = maxPositiva
 
     forY = 0
 
@@ -118,16 +129,16 @@ while True:
             fondoObjetos = mapaObjetos[y][x]
             
 
-            if 0 <= fondo <= 2:
+            if 0 <= fondo <= 1:
                 fondoADibujar = fondoAguaScaled
-            elif 3 <= fondo <= 8:
+            elif 2 <= fondo <= 4:
                 fondoADibujar = fondoMontScaled
-            elif 9 <= fondo <= 100:
+            elif 5 <= fondo <= 100:
                 fondoADibujar = fondoTierScaled
 
             screen.blit(fondoADibujar, (forX * anchoFoto, forY * altoFoto)) 
 
-            if 9 <= fondo <= 20:
+            if 5 <= fondo <= 15:
                 screen.blit(arbolScaled, (forX * anchoFoto, forY * altoFoto)) 
 
             if fondoObjetos == mapaObjetos[30][30]:
