@@ -6,167 +6,98 @@ import numpy as np
 from pygame.constants import MOUSEBUTTONDOWN
 
 
-anchoCelda = 20
-altoCelda = 20
+class mapacheto:
+    def __init__(self, cantidadFilas = 60, cantidadColumnas = 60, tamañoCelda = 20):
+        pygame.init()
+        anchoPantalla = 800
+        largoPantalla = 400
+        self.screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
+        pygame.display.set_caption('Civilization')
+        self.tamañoCelda = tamañoCelda
+        self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoCelda #40 
+        self.celdasPantallaTotalVertical = largoPantalla // self.tamañoCelda #20
+        self.centroPantallaX = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 60x60 
+        self.centroPantallaY = cantidadColumnas // 2
+        self.posicionPersonajeX =  self.centroPantallaX
+        self.posicionPersonajeY =  self.centroPantallaY
+        self.mapa =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
+        self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
+
+        self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
+        self.fondoMont = self.cargar_foto('imagenes/montaña.jpg')
+        self.fondoTier = self.cargar_foto('imagenes/tierra.png')
+        self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
+        self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
+        self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
+        self.mapaObjetos[self.posicionPersonajeY][self.posicionPersonajeX] = -1
 
 
-anchoPantalla = 800
-largoPantalla = 400
-fondoOriginal = None
-fondoReload = None
-fondo = None
-fondoADibujar = None
-fondoObjetos = None
+    def movimiento_pantalla(self, key):
+        """Me muevo por la pantalla hasta los limites de la matriz"""
+        maxNegativa = 0
+        maxPositiva = 30    
+        if key == pygame.K_UP:
+            self.centroPantallaY -= 2
+            if self.centroPantallaY <= maxNegativa:
+                self.centroPantallaY = maxNegativa
+        if key == pygame.K_DOWN:
+            self.centroPantallaY += 2
+            if self.centroPantallaY >= maxPositiva:
+                self.centroPantallaY = maxPositiva
+        if key == pygame.K_LEFT:
+            self.centroPantallaX -= 2
+            if self.centroPantallaX <= maxNegativa:
+                self.centroPantallaX = maxNegativa
+        if key == pygame.K_RIGHT:
+            self.centroPantallaX += 2
+            if self.centroPantallaX >= maxPositiva:
+                self.centroPantallaX = maxPositiva
 
-pygame.init()
-screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
-pygame.display.set_caption('Civilization')
-clock = pygame.time.Clock()
+    def mover_personaje(self):
+        """Genero el moviemiento del personaje haciendo clicks"""
+        self.mapaObjetos[self.posicionPersonajeY][self.posicionPersonajeX] = 0
+        mousePosX, mousePosY = pygame.mouse.get_pos()
+        posXCeldas = (mousePosX//self.tamañoCelda) # Lo escala al tamaño de las celdas
+        posYCeldas = (mousePosY//self.tamañoCelda) 
+        self.posicionPersonajeX = posXCeldas + self.centroPantallaX - (self.celdasPantallaTotalHorizontal//2) 
+        self.posicionPersonajeY = posYCeldas + self.centroPantallaY - (self.celdasPantallaTotalVertical//2) 
+        self.mapaObjetos[self.posicionPersonajeY][self.posicionPersonajeX] = -1
 
-celdasHorizontal = anchoPantalla // anchoCelda #40 
-celdasVertical = largoPantalla // altoCelda #20
+    def cargar_foto(self, imagen):
+        """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
+        fotoOriginal = pygame.image.load(imagen)
+        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoCelda, self.tamañoCelda))
+        return (fotoEscalada)
 
-anchoFoto = 20
-altoFoto = 20
+    def mostrar_mapa(self):
+        """Recorro ambas matrizes y cargo el mapa"""
+        forY = 0
 
-columna = 60
-fila = 60
-maxNegativa = 0
-maxPositiva = 30
-mxEscalado = 0
-myEscalado = 0
+        for y in range(self.centroPantallaY - (self.celdasPantallaTotalVertical//2), self.centroPantallaY + (self.celdasPantallaTotalVertical//2)):
+            forX = 0
+            for x in range(self.centroPantallaX - (self.celdasPantallaTotalHorizontal // 2), self.centroPantallaX + (self.celdasPantallaTotalHorizontal // 2)):
+                
+                fondo = self.mapa[y][x]
+                fondoObjetos = self.mapaObjetos[y][x]
+                
+                if 0 <= fondo <= 1:
+                    fondoADibujar = self.fondoAgua
+                elif 2 <= fondo <= 4:
+                    fondoADibujar = self.fondoMont
+                elif 5 <= fondo <= 100:
+                    fondoADibujar = self.fondoTier
 
-clicking = False
-rightClicking = False
+                self.screen.blit(fondoADibujar, (forX * self.tamañoCelda, forY * self.tamañoCelda)) 
 
-def crear_mapa(fila, columna, valor):
-    """Se crea la matriz para el mapa del juego"""
-    tablero = []
-    for i in range (fila):
-        tablero.append([])
-        for j in range (columna):
-            tablero[i].append(valor)
-    return tablero
+                if 5 <= fondo <= 15:
+                    self.screen.blit(self.arbol, (forX * self.tamañoCelda, forY * self.tamañoCelda)) 
 
-def mostar_mapa(tablero):
-    """Muestro el mapa"""
-    for fila in tablero:
-        for elem in fila:
-            print(elem, end=" ")
-        print()
+                if fondoObjetos == -1:
+                    if 16 <= fondo <= 100:
+                        self.screen.blit(self.hombre, (forX * self.tamañoCelda, forY * self.tamañoCelda))
+                    else:
+                        pass # Hacer que se printe en la ultima posicion el hombre y que no no aparezca directamente
 
+                forX += 1
 
-def construir_mapa(mapa):
-    x = 0 
-    y = 0
-    muros = []
-    for fila in mapa:
-        for muro in fila:
-            if muro == "X":
-                muros.append(pygame.Rect(x, y, 20, 20))
-            x += 20
-        x = 0
-        y += 20
-    return muros
-
-"""def dibujar_mapa(superficie, muros):
-    for muro in muros:
-        dibujar_agua(superficie, muro)"""
-
-"""def dibujar_agua(superficie, foto):
-    aguaOriginal = pygame.image.load('imagenes/agua.jpg')
-    foto = pygame.transform.scale(testGroundOriginal, (anchoCelda, altoCelda))
-    screen.blit(foto, (0, 0))
-    pygame.display.flip()"""
-
-fondoAgua = pygame.image.load('imagenes/agua.jpg')
-fondoAguaScaled = pygame.transform.scale(fondoAgua, (anchoCelda, altoCelda))
-fondoMont = pygame.image.load('imagenes/montaña.jpg')
-fondoMontScaled = pygame.transform.scale(fondoMont, (anchoCelda, altoCelda))
-fondoTier = pygame.image.load('imagenes/tierra.png')
-fondoTierScaled = pygame.transform.scale(fondoTier, (anchoCelda, altoCelda))
-arbol = pygame.image.load('imagenes/arbolrefull.png')
-arbolScaled = pygame.transform.scale(arbol, (anchoCelda, altoCelda))
-hombre = pygame.image.load('Tropas y personajes/3 Man/Man.png')
-hombreScaled = pygame.transform.scale(hombre, (anchoCelda, altoCelda))
-manWalk = pygame.image.load('Tropas y personajes/3 Man/Man_Walk.png')
-manWalkScaled = pygame.transform.scale(manWalk, (anchoCelda, altoCelda))
-
-mapa =  np.random.randint(0, 100,(fila,columna))
-mapaObjetos = np.random.randint(0, 100,(fila, columna))
-
-posX = 60 // 2
-posY = 60 // 2
-
-while True:
-    for event in pygame.event.get():
-        rightClicking = False
-
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                posY -= 2
-                if posY <= maxNegativa:
-                    posY = maxNegativa
-            if event.key == pygame.K_DOWN:
-                posY += 2
-                if posY >= maxPositiva:
-                    posY = maxPositiva
-            if event.key == pygame.K_LEFT:
-                posX -= 2
-                if posX <= maxNegativa:
-                    posX = maxNegativa
-            if event.key == pygame.K_RIGHT:
-                posX += 2
-                if posX >= maxPositiva:
-                    posX = maxPositiva
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1: 
-                mapaObjetos[myEscalado][mxEscalado] = 0
-                mx, my = pygame.mouse.get_pos()
-                mxEscalado = mx//anchoCelda
-                myEscalado = my//altoCelda
-                mapaObjetos[myEscalado][mxEscalado] = -1
-            elif event.button == 3: 
-                rightClicking = True
-
-
-    forY = 0
-
-    for y in range(0, 60):
-
-        forX = 0
-
-        for x in range(0, 60):
-
-            fondo = mapa[y][x]
-            fondoObjetos = mapaObjetos[y][x]
-            
-
-            if 0 <= fondo <= 1:
-                fondoADibujar = fondoAguaScaled
-            elif 2 <= fondo <= 4:
-                fondoADibujar = fondoMontScaled
-            elif 5 <= fondo <= 100:
-                fondoADibujar = fondoTierScaled
-
-            screen.blit(fondoADibujar, (forX * anchoFoto, forY * altoFoto)) 
-
-            if 5 <= fondo <= 15:
-                screen.blit(arbolScaled, (forX * anchoFoto, forY * altoFoto)) 
-
-            if fondoObjetos == -1:
-                if 16 <= fondo <= 100:
-                    screen.blit(hombreScaled, (forX * anchoFoto, forY * altoFoto))
-                else:
-                    pass # Hacer que se printe en la ultima posicion el hombre y que no no aparezca directamente
-
-            forX += 1
-
-        forY += 1
-
-    pygame.display.flip()
-    pygame.display.update()
-    clock.tick(60)
+            forY += 1
