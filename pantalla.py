@@ -33,7 +33,8 @@ columna = 60
 fila = 60
 maxNegativa = 0
 maxPositiva = 30
-
+mxEscalado = 0
+myEscalado = 0
 
 clicking = False
 rightClicking = False
@@ -92,7 +93,7 @@ manWalk = pygame.image.load('Tropas y personajes/3 Man/Man_Walk.png')
 manWalkScaled = pygame.transform.scale(manWalk, (anchoCelda, altoCelda))
 
 mapa =  np.random.randint(0, 100,(fila,columna))
-mapaObjetos = np.random.randn(fila, columna)
+mapaObjetos = np.random.randint(0, 100,(fila, columna))
 
 posX = 60 // 2
 posY = 60 // 2
@@ -100,7 +101,6 @@ posY = 60 // 2
 while True:
     for event in pygame.event.get():
         rightClicking = False
-        mx, my = pygame.mouse.get_pos()
 
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -124,24 +124,22 @@ while True:
                     posX = maxPositiva
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: 
-                clicking = True
-                if clicking:
-                    posXMouse = mx
-                    posYMouse = my
+                mapaObjetos[myEscalado][mxEscalado] = 0
+                mx, my = pygame.mouse.get_pos()
+                mxEscalado = mx//anchoCelda
+                myEscalado = my//altoCelda
+                mapaObjetos[myEscalado][mxEscalado] = -1
             elif event.button == 3: 
                 rightClicking = True
-                if rightClicking:
-                    posXMouse = mx
-                    posYMouse = my
-                    if posXMouse == mx and posYMouse == my:
-                        screen.blit(hombreScaled, (posXMouse, posYMouse))
+
+
     forY = 0
 
-    for y in range(posY - (celdasVertical // 2), posY + (celdasVertical // 2)):
+    for y in range(0, 60):
 
         forX = 0
 
-        for x in range(posX - (celdasHorizontal // 2), posX + (celdasHorizontal // 2)):
+        for x in range(0, 60):
 
             fondo = mapa[y][x]
             fondoObjetos = mapaObjetos[y][x]
@@ -159,14 +157,16 @@ while True:
             if 5 <= fondo <= 15:
                 screen.blit(arbolScaled, (forX * anchoFoto, forY * altoFoto)) 
 
-            if fondoObjetos == mapaObjetos[30][30]:
-                screen.blit(hombreScaled, (forX * anchoFoto, forY * altoFoto))
+            if fondoObjetos == -1:
+                if 16 <= fondo <= 100:
+                    screen.blit(hombreScaled, (forX * anchoFoto, forY * altoFoto))
+                else:
+                    pass # Hacer que se printe en la ultima posicion el hombre y que no no aparezca directamente
 
             forX += 1
 
         forY += 1
-  
-    
+
     pygame.display.flip()
     pygame.display.update()
     clock.tick(60)
