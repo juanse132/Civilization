@@ -1,9 +1,13 @@
+from celda import Celda
 import pygame
 from sys import exit
 from pygame import time
 from random import randint
 import numpy as np
 from pygame.constants import MOUSEBUTTONDOWN
+from tierra import Tierra
+from water import Agua
+from montaña import Montaña
 
 
 class mapacheto:
@@ -13,6 +17,9 @@ class mapacheto:
         largoPantalla = 400
         self.screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
         pygame.display.set_caption('Civilization')
+        self.fotoTierra = Tierra()
+        self.fotoAgua = Agua()
+        self.fotoMontaña = Montaña()
         self.tamañoCelda = tamañoCelda
         self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoCelda #40 
         self.celdasPantallaTotalVertical = largoPantalla // self.tamañoCelda #20
@@ -23,9 +30,9 @@ class mapacheto:
         self.mapa =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
         self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
 
-        self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
-        self.fondoMont = self.cargar_foto('imagenes/montaña.jpg')
-        self.fondoTier = self.cargar_foto('imagenes/tierra.png')
+        self.fondoAgua = self.fotoAgua.cargar_agua()
+        self.fondoMont = self.fotoMontaña.cargar_montaña()
+        self.fondoTier = self.fotoTierra.cargar_tierra()
         self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
