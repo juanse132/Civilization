@@ -89,15 +89,16 @@ class mapacheto:
                 
                 if 0 <= fondo <= 1:
                     fondoADibujar = self.fondoAgua
-                elif 2 <= fondo <= 4:
-                    fondoADibujar = self.fondoMont
-                elif 5 <= fondo <= 100:
+                elif 2 <= fondo <= 100:
                     fondoADibujar = self.fondoTier
 
                 self.screen.blit(fondoADibujar, (forX * self.tamañoCelda, forY * self.tamañoCelda)) 
 
                 if 5 <= fondo <= 15:
                     self.screen.blit(self.arbol, (forX * self.tamañoCelda, forY * self.tamañoCelda)) 
+                    
+                if 10 <= fondo <= 12:
+                    self.screen.blit(self.fondoMont, (forX * self.tamañoCelda, forY * self.tamañoCelda)) 
 
                 if fondoObjetos == -1:
                     if 16 <= fondo <= 100:

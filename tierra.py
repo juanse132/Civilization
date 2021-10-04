@@ -9,5 +9,5 @@ class Tierra(Celda):
     
     def cargar_tierra(self):
         fotoOriginal = pygame.image.load('imagenes/tierra.png')
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.celda.get_tamaño(),self.celda.get_tamaño()))
+        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.get_tamaño(),self.celda.get_tamaño()))
         return (fotoEscalada)
