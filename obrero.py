@@ -7,5 +7,7 @@ class Obrero(Personaje):
         self.estructura_a_contruir =["Mina", "Granja", "Corral","Puerto"]
         
     def recolectar(self):
+        pass
 
     def construir_estructura(self):
+        pass

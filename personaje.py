@@ -8,6 +8,8 @@ class Personaje:
         self.comida = None
 
     def get_pos(self):
+        pass
 
     
     def moverse(self):
+        pass
