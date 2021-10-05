@@ -7,3 +7,4 @@ class Civilizacion:
         self.comida = None
 
     def expansion(self):
+        pass

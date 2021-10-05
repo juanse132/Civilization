@@ -12,3 +12,6 @@ class Agua(Celda):
         fotoOriginal = pygame.image.load('imagenes/agua.jpg')
         fotoEscalada = pygame.transform.scale(fotoOriginal, (self.celda.get_tamaño(),self.celda.get_tamaño()))
         return (fotoEscalada)"""
+
+    def tiempo(self):
+        return self.velocidad
