@@ -1,6 +1,7 @@
 from mapa import Mapa
 import pygame
 from celda import Celda 
+from vista import Vista
 
 class Personaje:
     def __init__(self):
@@ -11,6 +12,7 @@ class Personaje:
         self.comida = None
         self.mapa = Mapa()
         self.celda = Celda()
+        self.vista = Vista()
 
     def get_pos(self):
         pass
@@ -21,6 +23,7 @@ class Personaje:
         mousePosX, mousePosY = pygame.mouse.get_pos()
         posXCeldas = (mousePosX//self.celda.get_tamaño()) # Lo escala al tamaño de las celdas
         posYCeldas = (mousePosY//self.celda.get_tamaño()) 
-        self.posicionPersonajeX = posXCeldas + self.centroPantallaX - (self.celdasPantallaTotalHorizontal//2) 
-        self.posicionPersonajeY = posYCeldas + self.centroPantallaY - (self.celdasPantallaTotalVertical//2) 
+        centroPantallaX, centroPantallaY = self.mapa.getCentroPantalla()
+        self.posicionPersonajeX = posXCeldas + centroPantallaX - (self.vista.getCeldasPantallaTotales()[0]) 
+        self.posicionPersonajeY = posYCeldas + centroPantallaY - (self.vista.getCeldasPantallaTotales()[0]) 
         self.mapa.descubirMapa(self.posicionPersonajeY,self.posicionPersonajeX, self.celdas_visibles)

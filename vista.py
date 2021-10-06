@@ -13,7 +13,9 @@ class Vista:
         largoPantalla = 400
         self.screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
         pygame.display.set_caption('Civilization')
-        self.tamañoFoto = 20
+        self.tamañoFotoCelda = 20
+        self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoFotoCelda #40 
+        self.celdasPantallaTotalVertical = largoPantalla // self.tamañoFotoCelda #20
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
         self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
         self.fondoTier = self.cargar_foto('imagenes/tierra.png')
@@ -25,5 +27,8 @@ class Vista:
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
         fotoOriginal = pygame.image.load(imagen)
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFoto, self.tamañoFoto))
+        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda, self.tamañoFotoCelda))
         return (fotoEscalada)
+
+    def getCeldasPantallaTotales(self):
+        return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical

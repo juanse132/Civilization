@@ -6,6 +6,8 @@ class Mapa():
     def __init__(self, cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.fila = 100
         self.col = 100
+        self.centroPantallaX = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 60x60 
+        self.centroPantallaY = cantidadColumnas // 2
         #self.mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
         self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
         self.mapaOculto = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion         
@@ -26,9 +28,8 @@ class Mapa():
         return mapa    
         
 
-    def getPosCelda(self):
-        #posCelda = self.mapaOculto[y][x]
-        pass
+    def getCentroPantalla(self):
+        return self.centroPantallaX, self.centroPantallaY
         
 
     def descubirMapa(self, posPersonajeY, posPersonajeX, visibilidad):
