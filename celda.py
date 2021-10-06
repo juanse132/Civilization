@@ -4,29 +4,19 @@ from montaña import Montaña
 
 
 class Celda:
-    def __init__(self):
-        self.visible = None
+    def __init__(self, is_visible=False):
+        self.visible = is_visible
         self.tamañaoCelda = 20
-        self.pisable = None
-        self.agua = Agua()
-        self.montaña = Montaña()
-        self.tierra = Tierra()
-
+        self.ocupada_con = None
 
     def get_tamaño(self):
         return self.tamañaoCelda
     
-    def pisar(self):
-        if self.agua.tiempo() == 0:
-            self.pisable = False
-        elif self.montaña.tiempo() == 3:
-            self.pisable = True
-        elif self.tierra.tiempo() == 1:
-            self.pisable = True
-        return self.pisable
-
-    def ocuapda (self):
+    def ocupada (self):
         pass
 
     def hayCuidad(self):
         pass
+    
+    def visibilizar(self):
+        self.visible = True
