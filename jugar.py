@@ -1,10 +1,11 @@
 import pygame
 from pantalla import mapacheto
+from vista import Vista
 
 class Juego:
     def __init__(self):
         self.clock = pygame.time.Clock()
-        self.mapa = mapacheto()
+        self.vista = Vista()
 
         self.jugar()
  
@@ -23,7 +24,7 @@ class Juego:
                     elif event.button == 3: 
                         rightClicking = True
 
-            self.mapa.mostrar_mapa()
+            self.vista.mostrar_mapa()
 
             pygame.display.flip()
             pygame.display.update()

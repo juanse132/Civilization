@@ -11,3 +11,5 @@ class Arbol(Celda):
     def minado(self):
         pass
 
+    def tiene_piedra(self):
+        return False
