@@ -17,33 +17,16 @@ class Celda:
 
     def get_tamaño(self):
         return self.tamañaoCelda
-    
-    def ocupada (self):
-        tipos = None
-        objeto = None
-        if self.tipo == Tierra():
-            tipos = self.tipo
 
-            if self.tipo.tiene_arbol() == Arbol():
-                objeto = self.tipo.tiene_arbol()
-
-        elif self.tipo == Agua():
-            tipos = self.tipo
-
-        elif self.tipo == Montaña():
-            tipos = self.tipo
-
-            if self.tipo.tiene_piedra() == Piedra():
-                objeto = self.tipo.tiene_piedra()
-        
-        return tipos,objeto
 
     def get_tipo(self):
         return self.tipo 
 
-    def get_objeto(self):
+    def obtenerPiedra(self):
         return self.tipo.get_piedra()
 
+    def obtenerArbol(self):
+        return self.tipo.get_arbol()
 
     def hayCuidad(self):
         pass

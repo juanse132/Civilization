@@ -22,7 +22,6 @@ class Montaña(Celda):
 
     def tiene_piedra(self):
         num = randint(9,100)
-        
         if num > 85:
             self.piedra = Piedra()
             return True

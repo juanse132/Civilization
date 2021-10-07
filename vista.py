@@ -3,7 +3,12 @@ from sys import exit
 from pygame import time
 from random import randint
 import numpy as np
+from mapa import Mapa
 from pygame.constants import MOUSEBUTTONDOWN
+from tierra import Tierra
+from water import Agua
+from montaña import Montaña
+from arbol import Arbol
 
 
 class Vista:
@@ -22,6 +27,8 @@ class Vista:
         self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
+        self.mapaObj = Mapa()
+        self.mapa = self.mapaObj.mapaOculto
 
 
     def cargar_foto(self, imagen):
@@ -31,4 +38,26 @@ class Vista:
         return (fotoEscalada)
 
     def getCeldasPantallaTotales(self):
+        """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
         return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical
+
+    def mostrar_mapa(self):
+        """Dibujo el mapa con todos los sprites juntos"""
+        for y in range(0, 100):
+            for x in range(0,100):
+
+                if self.mapa[y][x].get_tipo() == Tierra():
+
+                    self.screen.blit(self.fondoTier, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+                    if self.mapa[y][x].ocupada()[1] == Arbol():
+                        self.screen.blit(self.arbol, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+
+                if self.mapa[y][x].get_tipo() == Agua():
+
+                    self.screen.blit(self.fondoAgua, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+
+                if self.mapa[y][x].get_tipo() == Montaña():
+
+                    self.screen.blit(self.fondoMont, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+                    #poner foto piedra
+

@@ -22,7 +22,6 @@ class Tierra(Celda):
 
     def tiene_arbol(self):
         num = randint(9,100)
-        
         if num > 75:
             self.arbol = Arbol()
             return True
