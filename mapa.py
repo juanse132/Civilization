@@ -14,7 +14,7 @@ class Mapa():
         self.centroPantallaY = cantidadColumnas // 2
         #self.mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
         #self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
-        self.mapaOculto = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion         
+        self.mapaOculto = self.generarMapa(cantidadFilas, cantidadColumnas, True) #Le asigno un valor a cada posicion         
         #self.mapa = self.generarMapaAleatorio(cantidadFilas, cantidadColumnas)
     
     def generarMapaAleatorio(self):
@@ -30,11 +30,22 @@ class Mapa():
                 #tipos = ["montaña", "agua", "tierra"]
                 tipos = [Montaña, Agua, Tierra]
                 num = randint(0,2)
-                self.mapa[i].append(Celda(val, tipos[num]))
+                self.mapa[i].append(tipos[num]())
                 
 
         return self.mapa    
         
+    def playerSpawn(self):
+        numX = randint(0,80)
+        numY = randint(0,80)
+        while self.mapaOculto[numY][numX].isSpawnable() != True:
+            numX = randint(0,80)
+            numY = randint(0,80)
+            
+        self.descubirMapa(numY, numX, 4)
+        return numY, numX
+
+
 
     def getCentroPantalla(self):
         return self.centroPantallaX, self.centroPantallaY

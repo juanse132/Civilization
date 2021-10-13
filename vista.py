@@ -41,23 +41,33 @@ class Vista:
         """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
         return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical
 
+    def cargar_jugador(self):
+
+        self.screen.blit(self.hombre, (self.mapaObj.playerSpawn()[1] * self.tamañoFotoCelda, self.mapaObj.playerSpawn()[0] * self.tamañoFotoCelda))
+
+
     def mostrar_mapa(self):
         """Dibujo el mapa con todos los sprites juntos"""
-        for y in range(0, 100):
-            for x in range(0,100):
+        forY = 0
+        for y in range(self.mapaObj.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2), self.mapaObj.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)):
+            forX = 0
+            for x in range(self.mapaObj.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2), self.mapaObj.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)):
 
-                if self.mapa[y][x].get_tipo() == Tierra():
+                if self.mapa[y][x] == Tierra():
 
-                    self.screen.blit(self.fondoTier, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
-                    if self.mapa[y][x].ocupada()[1] == Arbol():
-                        self.screen.blit(self.arbol, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+                    self.screen.blit(self.fondoTier, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
+                    if self.mapa[y][x].tiene_arbol():
+                        self.screen.blit(self.arbol, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
 
-                if self.mapa[y][x].get_tipo() == Agua():
+                if self.mapa[y][x] == Agua():
 
-                    self.screen.blit(self.fondoAgua, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+                    self.screen.blit(self.fondoAgua, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
 
-                if self.mapa[y][x].get_tipo() == Montaña():
+                if self.mapa[y][x] == Montaña():
 
-                    self.screen.blit(self.fondoMont, (self.tamañoFotoCelda, self.tamañoFotoCelda)) 
+                    self.screen.blit(self.fondoMont, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
                     #poner foto piedra
 
+                forX += 1
+
+            forY += 1   

@@ -8,7 +8,8 @@ class Juego:
         self.vista = Vista()
 
         self.jugar()
- 
+
+
     def jugar(self):
         while True:
             for event in pygame.event.get():
@@ -17,14 +18,16 @@ class Juego:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    self.mapa.movimiento_pantalla(event.key)
+                    #self.mapa.movimiento_pantalla(event.key)
+                    pass
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: 
-                        self.mapa.mover_personaje()
+                        pass
                     elif event.button == 3: 
-                        rightClicking = True
+                        pass
 
             self.vista.mostrar_mapa()
+            
 
             pygame.display.flip()
             pygame.display.update()

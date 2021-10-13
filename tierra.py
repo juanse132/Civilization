@@ -6,10 +6,9 @@ from random import randint
 
 
 class Tierra(Celda):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, is_visible=False) -> None:
+        super().__init__(is_visible=False)
         self.velocidad = 1
-        self.celda = Celda()
         self.arbol = None
     
     """def cargar_tierra(self):
@@ -30,3 +29,7 @@ class Tierra(Celda):
     
     def get_arbol(self):
         return self.arbol
+
+
+    def isSpawnable(self):
+        return True
