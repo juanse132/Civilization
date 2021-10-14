@@ -1,11 +1,14 @@
 import pygame
 from pantalla import mapacheto
 from vista import Vista
+from mapa import Mapa
 
 class Juego:
+    # Es el controlador
     def __init__(self):
         self.clock = pygame.time.Clock()
-        self.vista = Vista()
+        self.mapa = Mapa() # es el modelo
+        self.vista = Vista(self.mapa)
 
         self.jugar()
 

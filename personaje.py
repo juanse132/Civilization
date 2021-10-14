@@ -10,9 +10,11 @@ class Personaje:
         self.velocidad = None
         self.celdas_visibles = 4
         self.comida = None
-        self.mapa = Mapa()
-        self.celda = Celda()
-        self.vista = Vista()
+        self.url_imagen = "Tropas y personajes/3 Man/Man.png"
+        self._sprite = None
+    
+    def set_sprite(self, sprite):
+        self._sprite = sprite
 
     def get_pos(self):
         pass

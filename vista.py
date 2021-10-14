@@ -12,13 +12,13 @@ from arbol import Arbol
 
 
 class Vista:
-    def __init__(self) -> None:
+    def __init__(self, mapa_actual) -> None:
         pygame.init()
         anchoPantalla = 800
         largoPantalla = 400
         self.screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
         pygame.display.set_caption('Civilization')
-        self.tamañoFotoCelda = 20
+        self.tamañoFotoCelda = 20 # en pixeles
         self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoFotoCelda #40 
         self.celdasPantallaTotalVertical = largoPantalla // self.tamañoFotoCelda #20
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
@@ -27,9 +27,18 @@ class Vista:
         self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
-        self.mapaObj = Mapa()
-        self.mapa = self.mapaObj.mapaOculto
+        self.mapa = mapa_actual
+        self.cargar_sprites()
 
+    def cargar_sprites(self):
+        for fila in self.mapa.get_mapa():
+            for celda in fila:
+                celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))
+
+    # def cargar_sprite_recursos(self):
+    #     for fila in self.mapa.get_mapa_recursos():
+    #         for celda in fila:
+    #             celda.set_sprite_recurso(self.cargar_foto(celda.get_url_recurso()))
 
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
@@ -42,32 +51,29 @@ class Vista:
         return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical
 
     def cargar_jugador(self):
-
-        self.screen.blit(self.hombre, (self.mapaObj.playerSpawn()[1] * self.tamañoFotoCelda, self.mapaObj.playerSpawn()[0] * self.tamañoFotoCelda))
+        # spawn del jugador
+        self.screen.blit(self.hombre, (self.mapa.playerSpawn()[1] * self.tamañoFotoCelda, self.mapa.playerSpawn()[0] * self.tamañoFotoCelda))
 
 
     def mostrar_mapa(self):
         """Dibujo el mapa con todos los sprites juntos"""
+        anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2)
+        anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)
+        largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2)
+        largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) 
         forY = 0
-        for y in range(self.mapaObj.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2), self.mapaObj.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)):
+        for y in range(anchoMinimo, anchoMaximo):
             forX = 0
-            for x in range(self.mapaObj.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2), self.mapaObj.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)):
+            for x in range(largoMinimo, largoMaximo):
+                
+                self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                try:
+                    print(self.mapa.get_item)
+                    self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                except:
+                    pass
 
-                if self.mapa[y][x] == Tierra():
-
-                    self.screen.blit(self.fondoTier, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
-                    if self.mapa[y][x].tiene_arbol():
-                        self.screen.blit(self.arbol, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
-
-                if self.mapa[y][x] == Agua():
-
-                    self.screen.blit(self.fondoAgua, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
-
-                if self.mapa[y][x] == Montaña():
-
-                    self.screen.blit(self.fondoMont, (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda)) 
-                    #poner foto piedra
-
+            
                 forX += 1
 
             forY += 1   

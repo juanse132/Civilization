@@ -10,6 +10,7 @@ class Montaña(Celda):
         super().__init__(is_visible=False)
         self.velocidad = 3
         self.piedra = None
+        self.url_imagen = "imagenes/montaña.jpg"
     
     """def cargar_montaña(self):
         fotoOriginal = pygame.image.load('imagenes/piedra3.png')
