@@ -32,7 +32,5 @@ class Tierra(Celda):
     def get_recurso(self):
         return self.recurso
 
-
-
     def isSpawnable(self):
         return True

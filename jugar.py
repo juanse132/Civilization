@@ -13,16 +13,15 @@ class Juego:
         self.jugar()
 
 
-    def jugar(self):
-        while True:
+    def jugar(self): 
+        while True:   
             for event in pygame.event.get():
                 rightClicking = False
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    #self.mapa.movimiento_pantalla(event.key)
-                    pass
+                    self.vista.movimiento_pantalla(event.type)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: 
                         pass
@@ -36,5 +35,7 @@ class Juego:
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)
+
+          
 
 juego = Juego()

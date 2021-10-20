@@ -1,5 +1,4 @@
 from celda import Celda
-from celda import Celda
 
 class Arbol(Celda):
     def __init__(self, is_visible=False) -> None:

@@ -31,11 +31,9 @@ class Mapa():
         """Crea una matriz con las filas y columnas y el valor q le vamos a pasar"""
         mapa = []
         tipos = [Montaña, Agua, Tierra]
-        recursos = []
         for i in range(fil):
             mapa.append([])
             for j in range(col):
-                #tipos = ["montaña", "agua", "tierra"]
                 num = randint(0,100)
                 if num<5:
                     tipo = tipos[0]

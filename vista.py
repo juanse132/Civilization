@@ -77,3 +77,26 @@ class Vista:
                 forX += 1
 
             forY += 1   
+
+
+    def movimiento_pantalla(self, key):
+        """Me muevo por la pantalla hasta los limites de la matriz"""
+        maxNegativa = 0
+        maxPositiva = 100   
+        self.centroPantallaX, self.centroPantallaY = self.mapa.getCentroPantalla()
+        if key == pygame.K_UP:
+            self.centroPantallaY -= 2
+            if self.centroPantallaY <= maxNegativa:
+                self.centroPantallaY = maxNegativa
+        if key == pygame.K_DOWN:
+            self.centroPantallaY += 2
+            if self.centroPantallaY >= maxPositiva:
+                self.centroPantallaY = maxPositiva
+        if key == pygame.K_LEFT:
+            self.centroPantallaX -= 2
+            if self.centroPantallaX <= maxNegativa:
+                self.centroPantallaX = maxNegativa
+        if key == pygame.K_RIGHT:
+            self.centroPantallaX += 2
+            if self.centroPantallaX >= maxPositiva:
+                self.centroPantallaX = maxPositiva 
