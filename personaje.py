@@ -1,10 +1,7 @@
-from mapa import Mapa
 import pygame
-from celda import Celda 
-from vista import Vista
 
 class Personaje:
-    def __init__(self):
+    def __init__(self, posicion):
         self.estado = True
         self.vida = None
         self.velocidad = None
@@ -12,12 +9,23 @@ class Personaje:
         self.comida = None
         self.url_imagen = "Tropas y personajes/3 Man/Man.png"
         self._sprite = None
+        self.posX = posicion[1]
+        self.posY = posicion[0]
     
     def set_sprite(self, sprite):
+        """Seteo el sprite"""
         self._sprite = sprite
 
+    def get_url_imagen(self):
+        """Obtengo la url de la imagen que voy a cargar y la devuelo"""
+        return self.url_imagen
+
+    def get_sprite(self):
+        """devuelvo el sprite"""
+        return self._sprite
+
     def get_pos(self):
-        pass
+        return self.posY, self.posX
  
     def moverse(self):
         """Genero el moviemiento del personaje haciendo clicks"""

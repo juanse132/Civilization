@@ -30,6 +30,7 @@ class Juego:
                         pass
 
             self.vista.mostrar_mapa()
+            self.vista.mostrar_jugador()
             
 
             pygame.display.flip()

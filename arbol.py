@@ -6,7 +6,7 @@ class Arbol(Celda):
         super().__init__(is_visible=False)
         self.vida = 40
         self.cantidadMaderaOtorgada = [60, 20, 10, 30]
-        self.url_imagen_recurso = "imagenes/arbol_nuevo.png"
+        self.url_imagen = "imagenes/arbol_nuevo.png"
 
     def minado(self):
         pass

@@ -4,6 +4,7 @@ from celda import Celda
 from montaña import Montaña
 from tierra import Tierra
 from water import Agua
+from personaje import Personaje
 
 
 class Mapa():
@@ -19,7 +20,7 @@ class Mapa():
         #self.mapa = self.generarMapaAleatorio(cantidadFilas, cantidadColumnas)
         #self.mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
         #self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
-        
+        self.personaje = Personaje(self.playerSpawn())
     
     def generarMapaAleatorio(self):
         cantidadFilas = 100
@@ -48,38 +49,19 @@ class Mapa():
         return mapa
             
 
-    # def generar_mapa_recursos(self):
-    #     mapa_rec = []
-    #     for i in range(100):
-    #         mapa_rec.append([])
-    #         for j in range(100):
-    #             if self.mapa[i][j] == :
-    #                 mapa_rec[i][j] = self.mapa[i][j]
-
-    #     return mapa_rec
-
     def get_mapa_recursos(self):
         return self.mapa_recursos
 
     def get_mapa(self):
         return self.mapa
     
-    # def generar_matriz_sprite(self):
-    #     mapa_num = []
-    #     for y in range(0, 100):
-    #         mapa_num.append([])
-    #         for x in range (0,100):
-                
-    #             self.mapa[y][x]
-
-
 
     def playerSpawn(self):
-        numX = randint(0,80)
-        numY = randint(0,80)
-        while self.mapaOculto[numY][numX].isSpawnable() != True:
-            numX = randint(0,80)
-            numY = randint(0,80)
+        numX = randint(0,100)
+        numY = randint(0,100)
+        while self.mapa[numY][numX].isSpawnable() != True:
+            numX = randint(0,100)
+            numY = randint(0,100)
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -95,7 +77,7 @@ class Mapa():
             for x in range((posPersonajeX + visibilidad), (posPersonajeX - visibilidad)):
                 if 0 < y < self.fila:
                     if 0 < x < self.col:
-                        self.mapaOculto[y][x].visibilizar()
+                        self.mapa[y][x].visibilizar()
    
 
     def get_recurso(self):
@@ -103,3 +85,6 @@ class Mapa():
     
     def get_item(self, y, x):
         return self.mapa[y][x]
+
+    def get_personaje(self):
+        return self.personaje

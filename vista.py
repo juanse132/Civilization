@@ -34,11 +34,11 @@ class Vista:
         for fila in self.mapa.get_mapa():
             for celda in fila:
                 celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))
-
-    # def cargar_sprite_recursos(self):
-    #     for fila in self.mapa.get_mapa_recursos():
-    #         for celda in fila:
-    #             celda.set_sprite_recurso(self.cargar_foto(celda.get_url_recurso()))
+                recurso = celda.get_recurso()
+                if recurso != None:
+                    recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
+        personaje = self.mapa.get_personaje()
+        personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
 
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
@@ -50,9 +50,10 @@ class Vista:
         """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
         return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical
 
-    def cargar_jugador(self):
+    def mostrar_jugador(self):
         # spawn del jugador
-        self.screen.blit(self.hombre, (self.mapa.playerSpawn()[1] * self.tamañoFotoCelda, self.mapa.playerSpawn()[0] * self.tamañoFotoCelda))
+        personaje = self.mapa.get_personaje()
+        self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
 
 
     def mostrar_mapa(self):
@@ -68,7 +69,6 @@ class Vista:
                 
                 self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 try:
-                    print(self.mapa.get_item)
                     self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 except:
                     pass
