@@ -7,12 +7,15 @@ from water import Agua
 from personaje import Personaje
 
 
+
 class Mapa():
     def __init__(self, cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.fila = 100
         self.col = 100
         self.centroPantallaX = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 60x60 
         self.centroPantallaY = cantidadColumnas // 2
+        self.maxNegativa = 0
+        self.maxPositiva = 100
 #        self.recurso = self.generar_matriz_sprite()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, True) #Le asigno un valor a cada posicion 
        # self.mapa_recursos = self.generar_mapa_recursos()
@@ -55,11 +58,16 @@ class Mapa():
     
 
     def playerSpawn(self):
-        numX = randint(0,100)
-        numY = randint(0,100)
+        from jugar import Juego
+        controlador = Juego
+        #Todo: falta arreglar lo del personaje en cuanto al controlador
+        anchoMinimoPantalla, anchoMaximoPantalla = controlador.get_ancho_pantalla()
+        largoMinimoPantalla, largoMaximoPantalla = controlador.get_largo_pantalla()
+        numX = randint(largoMinimoPantalla,largoMinimoPantalla)
+        numY = randint(anchoMinimoPantalla,anchoMaximoPantalla)
         while self.mapa[numY][numX].isSpawnable() != True:
-            numX = randint(0,100)
-            numY = randint(0,100)
+            numX = randint(largoMinimoPantalla,largoMaximoPantalla)
+            numY = randint(anchoMinimoPantalla,anchoMaximoPantalla)
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -86,3 +94,19 @@ class Mapa():
 
     def get_personaje(self):
         return self.personaje
+
+
+    def set_centro_pantalla_y(self, numeroNuevo):
+        self.centroPantallaY =  self.centroPantallaY + numeroNuevo
+        if self.centroPantallaY <= self.maxNegativa:
+            self.centroPantallaY = self.maxNegativa
+        if self.centroPantallaY >= self.maxPositiva:
+            self.centroPantallaY = self.maxPositiva
+
+
+    def set_centro_pantalla_x(self, numeroNuevo):
+        self.centroPantallaX = self.centroPantallaX + numeroNuevo
+        if self.centroPantallaX <= self.maxNegativa:
+            self.centroPantallaX = self.maxNegativa
+        if self.centroPantallaX >= self.maxPositiva:
+            self.centroPantallaX = self.maxPositiva 

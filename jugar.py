@@ -21,7 +21,7 @@ class Juego:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    self.vista.movimiento_pantalla(event.type)
+                    self.movimiento_pantalla(event.type)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: 
                         pass
@@ -35,7 +35,35 @@ class Juego:
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)
+        
 
+    def movimiento_pantalla(self, key):
+        """Me muevo por la pantalla hasta los limites de la matriz"""  
+        if key == pygame.K_UP: 
+            self.mapa.set_centro_pantalla_y(-2)
+        if key == pygame.K_DOWN:
+            self.mapa.set_centro_pantalla_y(2)
+        if key == pygame.K_LEFT:
+            self.mapa.set_centro_pantalla_x(-2)
+        if key == pygame.K_RIGHT:
+            self.mapa.set_centro_pantalla_x(2)
+
+
+    def mouse_posicion(self):
+        tamañoCelda = 20
+        posXMouse, posYMouse = self.vista.get_mouse_pos()
+        posXCeldas = (posXMouse//tamañoCelda) # Lo escala al tamaño de las celdas
+        posYCeldas = (posYMouse//tamañoCelda)
+        #Todo: falta terminar lo de moverse del personaje
+        return posXCeldas , posYCeldas
+
+    def get_ancho_pantalla(self):
+        anchoPantala = self.vista.get_ancho_pantalla()
+        return anchoPantala #tupla
+    
+    def get_largo_pantalla(self):
+        largoPantalla = self.vista.get_largo_pantalla()
+        return largoPantalla #tupla
           
 
 juego = Juego()

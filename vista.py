@@ -3,12 +3,8 @@ from sys import exit
 from pygame import time
 from random import randint
 import numpy as np
-from mapa import Mapa
 from pygame.constants import MOUSEBUTTONDOWN
-from tierra import Tierra
-from water import Agua
-from montaña import Montaña
-from arbol import Arbol
+
 
 
 class Vista:
@@ -21,6 +17,10 @@ class Vista:
         self.tamañoFotoCelda = 20 # en pixeles
         self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoFotoCelda #40 
         self.celdasPantallaTotalVertical = largoPantalla // self.tamañoFotoCelda #20
+        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2)
+        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)
+        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2)
+        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
         self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
         self.fondoTier = self.cargar_foto('imagenes/tierra.png')
@@ -45,6 +45,12 @@ class Vista:
         fotoOriginal = pygame.image.load(imagen)
         fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda, self.tamañoFotoCelda))
         return (fotoEscalada)
+    
+    def get_ancho_pantalla(self):
+        return self.anchoMinimo, self.anchoMaximo
+        
+    def get_largo_pantalla(self):    
+        return self.largoMinimo, self.largoMaximo
 
     def getCeldasPantallaTotales(self):
         """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
@@ -57,15 +63,11 @@ class Vista:
 
 
     def mostrar_mapa(self):
-        """Dibujo el mapa con todos los sprites juntos"""
-        anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2)
-        anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)
-        largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2)
-        largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) 
+        """Dibujo el mapa con todos los sprites juntos""" 
         forY = 0
-        for y in range(anchoMinimo, anchoMaximo):
+        for y in range(self.anchoMinimo, self.anchoMaximo):
             forX = 0
-            for x in range(largoMinimo, largoMaximo):
+            for x in range(self.largoMinimo, self.largoMaximo):
                 
                 self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 try:
@@ -77,26 +79,11 @@ class Vista:
                 forX += 1
 
             forY += 1   
+    
+    def moverse_en_pantalla(self):
+        movimiento = None
 
 
-    def movimiento_pantalla(self, key):
-        """Me muevo por la pantalla hasta los limites de la matriz"""
-        maxNegativa = 0
-        maxPositiva = 100   
-        self.centroPantallaX, self.centroPantallaY = self.mapa.getCentroPantalla()
-        if key == pygame.K_UP:
-            self.centroPantallaY -= 2
-            if self.centroPantallaY <= maxNegativa:
-                self.centroPantallaY = maxNegativa
-        if key == pygame.K_DOWN:
-            self.centroPantallaY += 2
-            if self.centroPantallaY >= maxPositiva:
-                self.centroPantallaY = maxPositiva
-        if key == pygame.K_LEFT:
-            self.centroPantallaX -= 2
-            if self.centroPantallaX <= maxNegativa:
-                self.centroPantallaX = maxNegativa
-        if key == pygame.K_RIGHT:
-            self.centroPantallaX += 2
-            if self.centroPantallaX >= maxPositiva:
-                self.centroPantallaX = maxPositiva 
+    def get_mouse_pos(self):
+        return pygame.mouse.get_pos()
+
