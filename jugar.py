@@ -21,7 +21,7 @@ class Juego:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    self.movimiento_pantalla(event.type)
+                    self.movimiento_pantalla(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: 
                         pass
@@ -38,15 +38,19 @@ class Juego:
         
 
     def movimiento_pantalla(self, key):
-        """Me muevo por la pantalla hasta los limites de la matriz"""  
+        """Me muevo por la pantalla hasta los limites de la matriz"""
         if key == pygame.K_UP: 
             self.mapa.set_centro_pantalla_y(-2)
+            #self.mapa.set_centro_pantalla_minimo_y(-2)
         if key == pygame.K_DOWN:
             self.mapa.set_centro_pantalla_y(2)
+            #self.mapa.set_centro_pantalla_maximo_y(2)
         if key == pygame.K_LEFT:
             self.mapa.set_centro_pantalla_x(-2)
+            #self.mapa.set_centro_pantalla_minimo_x(-2)
         if key == pygame.K_RIGHT:
             self.mapa.set_centro_pantalla_x(2)
+            #self.mapa.set_centro_pantalla_maximo_x(2)
 
 
     def mouse_posicion(self):

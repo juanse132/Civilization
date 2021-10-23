@@ -57,10 +57,16 @@ class Vista:
         personaje = self.mapa.get_personaje()
         self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
 
+    def set_nuevos_limites(self):
+        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) 
+        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) 
+        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) 
+        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)       
 
     def mostrar_mapa(self):
-        """Dibujo el mapa con todos los sprites juntos""" 
+        """Dibujo el mapa con todos los sprites juntos"""  
         forY = 0
+        self.set_nuevos_limites()
         for y in range(self.anchoMinimo, self.anchoMaximo):
             forX = 0
             for x in range(self.largoMinimo, self.largoMaximo):
