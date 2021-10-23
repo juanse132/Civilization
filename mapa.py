@@ -12,7 +12,7 @@ class Mapa():
     def __init__(self, cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.fila = 100
         self.col = 100
-        self.centroPantallaX = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 60x60 
+        self.centroPantallaX = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroPantallaY = cantidadColumnas // 2
         self.maxNegativa = 0
         self.maxPositiva = 100
@@ -31,7 +31,7 @@ class Mapa():
         mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))        
 
     def generarMapa(self, fil, col, val):
-        """Crea una matriz con las filas y columnas y el valor q le vamos a pasar"""
+        """SE crea el mapa con la amtriz y se le agrega si es montaña, agua o tierra"""
         mapa = []
         tipos = [Montaña, Agua, Tierra]
         for i in range(fil):
@@ -58,16 +58,12 @@ class Mapa():
     
 
     def playerSpawn(self):
-        from jugar import Juego
-        controlador = Juego
-        #Todo: falta arreglar lo del personaje en cuanto al controlador
-        anchoMinimoPantalla, anchoMaximoPantalla = controlador.get_ancho_pantalla()
-        largoMinimoPantalla, largoMaximoPantalla = controlador.get_largo_pantalla()
-        numX = randint(largoMinimoPantalla,largoMinimoPantalla)
-        numY = randint(anchoMinimoPantalla,anchoMaximoPantalla)
+        """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
+        numX = randint(30, 70)
+        numY = randint(40, 60)
         while self.mapa[numY][numX].isSpawnable() != True:
-            numX = randint(largoMinimoPantalla,largoMaximoPantalla)
-            numY = randint(anchoMinimoPantalla,anchoMaximoPantalla)
+            numX = randint(30, 70)
+            numY = randint(40, 60) 
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -79,6 +75,7 @@ class Mapa():
         
 
     def descubirMapa(self, posPersonajeY, posPersonajeX, visibilidad):
+        """Se descubre el mapa a medida que el personaje avanza"""
         for y in range((posPersonajeY + visibilidad), (posPersonajeY - visibilidad)):
             for x in range((posPersonajeX + visibilidad), (posPersonajeX - visibilidad)):
                 if 0 < y < self.fila:
@@ -96,16 +93,18 @@ class Mapa():
         return self.personaje
 
 
-    def set_centro_pantalla_y(self, numeroNuevo):
-        self.centroPantallaY =  self.centroPantallaY + numeroNuevo
+    def set_centro_pantalla_y(self, numeroNuevoY):
+        """Se setea el nuevo centro de la pantalla en el eje Y"""
+        self.centroPantallaY =  self.centroPantallaY + numeroNuevoY
         if self.centroPantallaY <= self.maxNegativa:
             self.centroPantallaY = self.maxNegativa
         if self.centroPantallaY >= self.maxPositiva:
             self.centroPantallaY = self.maxPositiva
 
 
-    def set_centro_pantalla_x(self, numeroNuevo):
-        self.centroPantallaX = self.centroPantallaX + numeroNuevo
+    def set_centro_pantalla_x(self, numeroNuevoX):
+        """Se setea el nuevo centro de la pantalla en el eje X"""
+        self.centroPantallaX = self.centroPantallaX + numeroNuevoX
         if self.centroPantallaX <= self.maxNegativa:
             self.centroPantallaX = self.maxNegativa
         if self.centroPantallaX >= self.maxPositiva:

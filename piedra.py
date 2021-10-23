@@ -13,3 +13,4 @@ class Piedra(Celda):
     def minado(self):
         pass
 
+    

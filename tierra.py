@@ -11,6 +11,7 @@ class Tierra(Celda):
         self.velocidad = 1
         self.url_imagen = "imagenes/tierra.png"
         self.set_arbol()
+        self.set_arbusto()
         
     """def cargar_tierra(self):
         fotoOriginal = pygame.image.load('imagenes/tierra.png')
@@ -25,6 +26,15 @@ class Tierra(Celda):
         num = randint(9,100)
         if num > 90:
             self.recurso = Arbol()
+            return True
+        else:
+            return False
+
+    def set_arbusto(self):
+        from arbusto import Arbusto
+        num = randint(9,100)
+        if num > 96:
+            self.recurso = Arbusto()
             return True
         else:
             return False

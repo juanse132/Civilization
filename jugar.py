@@ -57,13 +57,6 @@ class Juego:
         #Todo: falta terminar lo de moverse del personaje
         return posXCeldas , posYCeldas
 
-    def get_ancho_pantalla(self):
-        anchoPantala = self.vista.get_ancho_pantalla()
-        return anchoPantala #tupla
-    
-    def get_largo_pantalla(self):
-        largoPantalla = self.vista.get_largo_pantalla()
-        return largoPantalla #tupla
           
 
 juego = Juego()

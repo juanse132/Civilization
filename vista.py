@@ -17,20 +17,21 @@ class Vista:
         self.tamañoFotoCelda = 20 # en pixeles
         self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoFotoCelda #40 
         self.celdasPantallaTotalVertical = largoPantalla // self.tamañoFotoCelda #20
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2)
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2)
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2)
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)
+        self.mapa = mapa_actual
+        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
+        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
+        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
+        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
         self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
         self.fondoTier = self.cargar_foto('imagenes/tierra.png')
         self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
-        self.mapa = mapa_actual
         self.cargar_sprites()
 
     def cargar_sprites(self):
+        """Se cargarn todos los sprites"""
         for fila in self.mapa.get_mapa():
             for celda in fila:
                 celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))
@@ -46,11 +47,6 @@ class Vista:
         fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda, self.tamañoFotoCelda))
         return (fotoEscalada)
     
-    def get_ancho_pantalla(self):
-        return self.anchoMinimo, self.anchoMaximo
-        
-    def get_largo_pantalla(self):    
-        return self.largoMinimo, self.largoMaximo
 
     def getCeldasPantallaTotales(self):
         """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
@@ -78,11 +74,9 @@ class Vista:
             
                 forX += 1
 
-            forY += 1   
+            forY += 1 
+        
     
-    def moverse_en_pantalla(self):
-        movimiento = None
-
 
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
