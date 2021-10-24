@@ -17,6 +17,7 @@ class Mapa():
         self.maxNegativa = 0
         self.maxPositivaY = 90
         self.maxPositivaX = 80
+        self.celdasPantallaTotal = [40, 20]
 #        self.recurso = self.generar_matriz_sprite()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, True) #Le asigno un valor a cada posicion 
        # self.mapa_recursos = self.generar_mapa_recursos()
@@ -24,7 +25,7 @@ class Mapa():
         #self.mapa = self.generarMapaAleatorio(cantidadFilas, cantidadColumnas)
         #self.mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
         #self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
-        self.personaje = Personaje(self.playerSpawn())
+        self.personaje = Personaje(self.playerSpawn(self.celdasPantallaTotal))
     
     def generarMapaAleatorio(self):
         cantidadFilas = 100
@@ -41,7 +42,7 @@ class Mapa():
                 num = randint(0,100)
                 if num<5:
                     tipo = tipos[0]
-                elif num>95:
+                elif num>98:
                     tipo = tipos[1]
                 else:
                     tipo = tipos[2]
@@ -57,13 +58,16 @@ class Mapa():
         return self.mapa
     
 
-    def playerSpawn(self):
+    def playerSpawn(self, celdasTotalesPantalla):
         """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        numX = randint(30, 70)
-        numY = randint(40, 60)
-        while self.mapa[numY][numX].isSpawnable() != True:
-            numX = randint(30, 70)
-            numY = randint(40, 60) 
+        celdasTotalesX = celdasTotalesPantalla[0]
+        celdasTotalesY = celdasTotalesPantalla[1]
+        numX = randint((celdasTotalesX // 2) - 4 , (celdasTotalesX // 2) + 4)
+        numY = randint((celdasTotalesY // 2) - 4, (celdasTotalesY // 2) + 4)
+        while self.mapa[numY][numX].isSpawnable() != True: 
+            if self.mapa[numY][numX].isSpawnableRecurso() != True:
+                numX = randint((celdasTotalesX // 2) - 4 , (celdasTotalesX // 2) + 4)
+                numY = randint((celdasTotalesY // 2) - 4, (celdasTotalesY // 2) + 4) 
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -100,7 +104,6 @@ class Mapa():
             self.centroPantallaY = self.maxNegativa
         if self.centroPantallaY >= self.maxPositivaY:
             self.centroPantallaY = self.maxPositivaY
-        print(self.centroPantallaY)
             
     def set_centro_pantalla_x(self, numeroNuevoX):
         """Se setea el nuevo centro de la pantalla en el eje X"""
@@ -108,29 +111,5 @@ class Mapa():
         if self.centroPantallaX <= self.maxNegativa:
             self.centroPantallaX = self.maxNegativa
         if self.centroPantallaX >= self.maxPositivaX:
-            self.centroPantallaX = self.maxPositivaX
-        print(self.centroPantallaX) 
+            self.centroPantallaX = self.maxPositivaX 
         
-    def set_centro_pantalla_minimo_y(self, numeroNuevoMinimoY):
-        self.centroPantallaY =  self.centroPantallaY + numeroNuevoMinimoY
-        if self.centroPantallaY <= self.maxNegativa:
-            self.centroPantallaY = self.maxNegativa
-        print(self.centroPantallaY)
-
-    def set_centro_pantalla_maximo_y(self, numeroNuevoMaximoY):
-        self.centroPantallaY =  self.centroPantallaY + numeroNuevoMaximoY
-        if self.centroPantallaY <= self.maxPositiva:
-            self.centroPantallaY = self.maxPositiva
-        print(self.centroPantallaY)
-
-    def set_centro_pantalla_minimo_x(self, numeroNuevoMinimoX):
-        self.centroPantallaX =  self.centroPantallaX + numeroNuevoMinimoX
-        if self.centroPantallaX <= self.maxNegativa:
-            self.centroPantallaX = self.maxNegativa
-        print(self.centroPantallaX)
-
-    def set_centro_pantalla_maximo_x(self, numeroNuevoMaximoX):
-        self.centroPantallaX =  self.centroPantallaX + numeroNuevoMaximoX
-        if self.centroPantallaX <= self.maxPositiva:
-            self.centroPantallaX = self.maxPositiva
-        print(self.centroPantallaX)

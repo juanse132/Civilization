@@ -41,16 +41,12 @@ class Juego:
         """Me muevo por la pantalla hasta los limites de la matriz"""
         if key == pygame.K_UP: 
             self.mapa.set_centro_pantalla_y(-2)
-            #self.mapa.set_centro_pantalla_minimo_y(-2)
         if key == pygame.K_DOWN:
             self.mapa.set_centro_pantalla_y(2)
-            #self.mapa.set_centro_pantalla_maximo_y(2)
         if key == pygame.K_LEFT:
             self.mapa.set_centro_pantalla_x(-2)
-            #self.mapa.set_centro_pantalla_minimo_x(-2)
         if key == pygame.K_RIGHT:
             self.mapa.set_centro_pantalla_x(2)
-            #self.mapa.set_centro_pantalla_maximo_x(2)
 
 
     def mouse_posicion(self):
@@ -60,6 +56,10 @@ class Juego:
         posYCeldas = (posYMouse//tamañoCelda)
         #Todo: falta terminar lo de moverse del personaje
         return posXCeldas , posYCeldas
+
+    def get_celdas_pantalla(self):
+        celdasTotales = self.vista.get_celdas_pantalla_totales()
+        self.mapa.playerSpawn(celdasTotales)
 
           
 

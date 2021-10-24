@@ -48,9 +48,9 @@ class Vista:
         return (fotoEscalada)
     
 
-    def getCeldasPantallaTotales(self):
+    def get_celdas_pantalla_totales(self):
         """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
-        return self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical
+        return (self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical)
 
     def mostrar_jugador(self):
         # spawn del jugador
@@ -58,6 +58,7 @@ class Vista:
         self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
 
     def set_nuevos_limites(self):
+        """Seteo los nuevos limites para redibujar el mapa"""
         self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) 
         self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) 
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) 

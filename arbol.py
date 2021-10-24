@@ -10,5 +10,3 @@ class Arbol(Celda):
     def minado(self):
         pass
 
-    def isSpawnable(self):
-        return False

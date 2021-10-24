@@ -32,3 +32,8 @@ class Montaña(Celda):
 
     def get_recurso(self):
         return self.recurso
+
+    
+    def isSpawnableRecurso(self):
+        if self.set_piedra():
+            return False
