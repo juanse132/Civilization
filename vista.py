@@ -8,15 +8,15 @@ from pygame.constants import MOUSEBUTTONDOWN
 
 
 class Vista:
-    def __init__(self, mapa_actual) -> None:
+    def __init__(self, mapa_actual, celdasPantallaTotales, tamanioFotoCelda, anchoLargoPantalla) -> None:
         pygame.init()
-        anchoPantalla = 800
-        largoPantalla = 400
-        self.screen = pygame.display.set_mode((anchoPantalla,largoPantalla))
+        #anchoPantalla = 800
+        #largoPantalla = 400
+        self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
         pygame.display.set_caption('Civilization')
-        self.tamañoFotoCelda = 20 # en pixeles
-        self.celdasPantallaTotalHorizontal = anchoPantalla // self.tamañoFotoCelda #40 
-        self.celdasPantallaTotalVertical = largoPantalla // self.tamañoFotoCelda #20
+        self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
+        self.celdasPantallaTotalHorizontal = celdasPantallaTotales[0] #40 celdas que entran horizontal en la pantalla
+        self.celdasPantallaTotalVertical = celdasPantallaTotales[1] #20 celdas que entran vertical en la pantalla
         self.mapa = mapa_actual
         self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
         self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
@@ -48,9 +48,9 @@ class Vista:
         return (fotoEscalada)
     
 
-    def get_celdas_pantalla_totales(self):
-        """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
-        return (self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical)
+    #def get_celdas_pantalla_totales(self):
+    #    """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
+    #    return (self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical)
 
     def mostrar_jugador(self):
         # spawn del jugador

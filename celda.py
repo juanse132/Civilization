@@ -2,6 +2,7 @@
 
 class Celda:
     def __init__(self, is_visible=True):
+        # TODO: areglar lo de que no se vea el mapa
         self.visible = is_visible
         self.tamañaoCelda = 20
         self.objetos = []

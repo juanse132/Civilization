@@ -9,28 +9,24 @@ from personaje import Personaje
 
 
 class Mapa():
-    def __init__(self, cantidadFilas = 100, cantidadColumnas = 100) -> None:
-        self.fila = 100
-        self.col = 100
+    def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.centroPantallaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroPantallaX = cantidadColumnas // 2
-        self.maxNegativa = 0
+        
         self.maxPositivaY = 90
+        self.minNegativoY = 20
+
         self.maxPositivaX = 80
-        self.celdasPantallaTotal = [40, 20]
-#        self.recurso = self.generar_matriz_sprite()
-        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, True) #Le asigno un valor a cada posicion 
-       # self.mapa_recursos = self.generar_mapa_recursos()
-        # TODO: cambiar último argumento a False        
-        #self.mapa = self.generarMapaAleatorio(cantidadFilas, cantidadColumnas)
-        #self.mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))
-        #self.mapaObjetos = np.random.randint(0, 100,(cantidadFilas, cantidadColumnas))
-        self.personaje = Personaje(self.playerSpawn(self.celdasPantallaTotal))
+        self.minNegativoX = 10
+
+        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion         
+        self.personaje = Personaje(self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla))
     
-    def generarMapaAleatorio(self):
+    def generar_mapa_no_aleatorio(self):
         cantidadFilas = 100
         cantidadColumnas = 100
-        mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))        
+        mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))    
+        #TODO:ver lo de generar 2 mapas     
 
     def generarMapa(self, fil, col, val):
         """SE crea el mapa con la amtriz y se le agrega si es montaña, agua o tierra"""
@@ -58,16 +54,38 @@ class Mapa():
         return self.mapa
     
 
-    def playerSpawn(self, celdasTotalesPantalla):
+    def playerSpawn2(self):
         """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        celdasTotalesX = celdasTotalesPantalla[0]
-        celdasTotalesY = celdasTotalesPantalla[1]
-        numX = randint((celdasTotalesX // 2) - 4 , (celdasTotalesX // 2) + 4)
-        numY = randint((celdasTotalesY // 2) - 4, (celdasTotalesY // 2) + 4)
+        numX = randint((self.centroPantallaX + 30) - 5 , ((self.centroPantallaX + 50) - 30) + 5)
+        numY = randint((self.centroPantallaY + 20) - 5, ((self.centroPantallaY + 30) - 20) + 5)
         while self.mapa[numY][numX].isSpawnable() != True: 
             if self.mapa[numY][numX].isSpawnableRecurso() != True:
-                numX = randint((celdasTotalesX // 2) - 4 , (celdasTotalesX // 2) + 4)
-                numY = randint((celdasTotalesY // 2) - 4, (celdasTotalesY // 2) + 4) 
+                numX = randint((self.centroPantallaX + 30) - 5, ((self.centroPantallaX + 50) - 30) + 5)
+                numY = randint((self.centroPantallaY + 20) - 5, ((self.centroPantallaY + 30) - 20) + 5) 
+            else:
+                continue
+            
+        self.descubirMapa(numY, numX, 4)
+        print (numY, numX)
+        return numY, numX
+
+
+
+    def playerSpawn(self, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical):
+        """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
+        yMinimaPantalla = (celdasPantallaTotalVertical // 2) - 5
+        yMaximaPantalla = (celdasPantallaTotalVertical // 2) + 5
+
+        xMinimaPantala = (celdasPantallaTotalHorizontal // 2) - 5
+        xMaximoPantala = (celdasPantallaTotalHorizontal // 2) + 5
+
+        numX = randint(xMinimaPantala , xMaximoPantala)
+        numY = randint(yMinimaPantalla, yMaximaPantalla)
+        while self.mapa[numY][numX].isSpawnable() != True or self.mapa[numY][numX].isSpawnableRecurso() != True: 
+            numX = randint(xMinimaPantala, xMaximoPantala)
+            numY = randint(yMinimaPantalla, yMaximaPantalla) 
+            # TODO: arreglar el problema del spawn
+        
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -100,16 +118,18 @@ class Mapa():
     def set_centro_pantalla_y(self, numeroNuevoY):
         """Se setea el nuevo centro de la pantalla en el eje Y"""
         self.centroPantallaY =  self.centroPantallaY + numeroNuevoY
-        if self.centroPantallaY <= self.maxNegativa:
-            self.centroPantallaY = self.maxNegativa
+        if self.centroPantallaY <= self.minNegativoY:
+            self.centroPantallaY = self.minNegativoY
         if self.centroPantallaY >= self.maxPositivaY:
             self.centroPantallaY = self.maxPositivaY
+        print(self.centroPantallaY)
             
     def set_centro_pantalla_x(self, numeroNuevoX):
         """Se setea el nuevo centro de la pantalla en el eje X"""
         self.centroPantallaX = self.centroPantallaX + numeroNuevoX
-        if self.centroPantallaX <= self.maxNegativa:
-            self.centroPantallaX = self.maxNegativa
+        if self.centroPantallaX <= self.minNegativoX:
+            self.centroPantallaX = self.minNegativoX
         if self.centroPantallaX >= self.maxPositivaX:
             self.centroPantallaX = self.maxPositivaX 
+        print(self.centroPantallaX)
         

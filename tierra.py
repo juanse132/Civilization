@@ -46,5 +46,7 @@ class Tierra(Celda):
         return True
     
     def isSpawnableRecurso(self):
-        if self.set_arbol() or self.set_arbusto():
+        if self.recurso != None:
+            return True
+        else:
             return False

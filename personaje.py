@@ -34,3 +34,4 @@ class Personaje:
         #self.posicionPersonajeX = posXCeldas + centroPantallaX - (self.vista.getCeldasPantallaTotales()[0]) 
         #self.posicionPersonajeY = posYCeldas + centroPantallaY - (self.vista.getCeldasPantallaTotales()[1]) 
        # self.mapa.descubirMapa(self.posicionPersonajeY,self.posicionPersonajeX, self.celdas_visibles)
+       # TODO:arreglar moverse

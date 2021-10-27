@@ -7,8 +7,10 @@ class Juego:
     # Es el controlador
     def __init__(self):
         self.clock = pygame.time.Clock()
+        self.tamanioFotoCelda = 20
+        self.anchoLargoPantalla = [800, 400]
         self.mapa = Mapa() # es el modelo
-        self.vista = Vista(self.mapa)
+        self.vista = Vista(self.mapa,self.get_celdas_totales_pantalla(), self.tamanioFotoCelda, self.anchoLargoPantalla)
 
         self.jugar()
 
@@ -29,7 +31,7 @@ class Juego:
                         pass
 
             self.vista.mostrar_mapa()
-            self.vista.mostrar_jugador()
+            self.vista.mostrar_jugador()            
             
 
             pygame.display.flip()
@@ -57,9 +59,12 @@ class Juego:
         #Todo: falta terminar lo de moverse del personaje
         return posXCeldas , posYCeldas
 
-    def get_celdas_pantalla(self):
-        celdasTotales = self.vista.get_celdas_pantalla_totales()
-        self.mapa.playerSpawn(celdasTotales)
+
+    def get_celdas_totales_pantalla(self):
+        celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
+        celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
+        self.mapa.playerSpawn(celdasPantallaTotalHorizontal, celdasPantallaTotalVertical)
+        return (celdasPantallaTotalHorizontal, celdasPantallaTotalVertical)
 
           
 
