@@ -18,17 +18,23 @@ class Vista:
         self.celdasPantallaTotalHorizontal = celdasPantallaTotales[0] #40 celdas que entran horizontal en la pantalla
         self.celdasPantallaTotalVertical = celdasPantallaTotales[1] #20 celdas que entran vertical en la pantalla
         self.mapa = mapa_actual
+        self.setear_pantalla()
+        self.setear_fotos()
+        self.cargar_sprites()
+
+    def setear_pantalla(self):
         self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
         self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
         self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
+
+    def setear_fotos(self):
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
         self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
         self.fondoTier = self.cargar_foto('imagenes/tierra.png')
         self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
-        self.cargar_sprites()
 
     def cargar_sprites(self):
         """Se cargarn todos los sprites"""

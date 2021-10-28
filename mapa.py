@@ -84,7 +84,6 @@ class Mapa():
         while self.mapa[numY][numX].isSpawnable() != True or self.mapa[numY][numX].isSpawnableRecurso() != True: 
             numX = randint(xMinimaPantala, xMaximoPantala)
             numY = randint(yMinimaPantalla, yMaximaPantalla) 
-            # TODO: arreglar el problema del spawn
         
             
         self.descubirMapa(numY, numX, 4)
