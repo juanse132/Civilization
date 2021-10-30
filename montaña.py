@@ -10,10 +10,6 @@ class Montaña(Celda):
         self.url_imagen = "imagenes/montaña.jpg"
         self.set_piedra()
     
-    """def cargar_montaña(self):
-        fotoOriginal = pygame.image.load('imagenes/piedra3.png')
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.celda.get_tamaño(),self.celda.get_tamaño()))
-        return (fotoEscalada)"""
 
     def isSpawnable(self):
         return False
@@ -22,6 +18,7 @@ class Montaña(Celda):
         return self.velocidad
 
     def set_piedra(self):
+        """Se setea el recurso de la piedra con probabilidades"""
         from piedra import Piedra
         num = randint(9,100)
         if num > 85:

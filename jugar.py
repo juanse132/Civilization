@@ -53,6 +53,7 @@ class Juego:
 
 
     def mouse_posicion(self):
+        """Saco la posicion del mouse y la transformo a celda para luego mover al personaje"""
         posXMouse, posYMouse = self.vista.get_mouse_pos()
         posXCeldas = (posXMouse//self.tamanioFotoCelda) # Lo escala al tamaño de las celdas
         posYCeldas = (posYMouse//self.tamanioFotoCelda)

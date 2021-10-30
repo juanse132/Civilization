@@ -28,12 +28,7 @@ class Personaje:
         return self.posY, self.posX
     
     def mover_personaje(self, posicionNueva):
-        """Genero el moviemiento del personaje haciendo clicks"""
+        """Cargo la nueva posicion para luego moverme por el mapa"""
         self.posY = posicionNueva[1]
         self.posX = posicionNueva[0]
-        #self.mapa.mapaObjetos[self.posicionPersonajeY][self.posicionPersonajeX] = 0 
-        #centroPantallaX, centroPantallaY = self.mapa.getCentroPantalla()
-        #self.posicionPersonajeX = posXCeldas + centroPantallaX - (self.vista.getCeldasPantallaTotales()[0]) 
-        #self.posicionPersonajeY = posYCeldas + centroPantallaY - (self.vista.getCeldasPantallaTotales()[1]) 
-       # self.mapa.descubirMapa(self.posicionPersonajeY,self.posicionPersonajeX, self.celdas_visibles)
-       # TODO:arreglar moverse
+        # TODO:falta terminar lo de moverse

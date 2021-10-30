@@ -13,15 +13,12 @@ class Tierra(Celda):
         self.set_arbol()
         self.set_arbusto()
         
-    """def cargar_tierra(self):
-        fotoOriginal = pygame.image.load('imagenes/tierra.png')
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.get_tamaño(),self.celda.get_tamaño()))
-        return (fotoEscalada)"""
     
     def tiempo(self):
         return self.velocidad
 
     def set_arbol(self):
+        """Se setean los arboles con probabilidades"""
         from arbol import Arbol
         num = randint(9,100)
         if num > 90:
@@ -31,6 +28,7 @@ class Tierra(Celda):
             return False
 
     def set_arbusto(self):
+        """Se setean los arbustos con probabilidades"""
         from arbusto import Arbusto
         num = randint(9,100)
         if num > 96:

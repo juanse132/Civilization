@@ -12,21 +12,18 @@ class Mapa():
     def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.centroPantallaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroPantallaX = cantidadColumnas // 2
-        
+        self.maximo_minimo_pantalla()
+        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion         
+        self.personaje = Personaje(self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla))
+
+    def maximo_minimo_pantalla(self):
+        """Establezco los limites para no pasarme a la hora de mover la camara"""
         self.maxPositivaY = 90
         self.minNegativoY = 20
 
         self.maxPositivaX = 80
         self.minNegativoX = 10
-
-        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion         
-        self.personaje = Personaje(self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla))
     
-    def generar_mapa_no_aleatorio(self):
-        cantidadFilas = 100
-        cantidadColumnas = 100
-        mapas =  np.random.randint(0, 100,(cantidadFilas,cantidadColumnas))    
-        #TODO:ver lo de generar 2 mapas     
 
     def generarMapa(self, fil, col, val):
         """SE crea el mapa con la amtriz y se le agrega si es montaña, agua o tierra"""

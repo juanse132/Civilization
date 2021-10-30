@@ -10,8 +10,6 @@ from pygame.constants import MOUSEBUTTONDOWN
 class Vista:
     def __init__(self, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
         pygame.init()
-        #anchoPantalla = 800
-        #largoPantalla = 400
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
         pygame.display.set_caption('Civilization')
         self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
@@ -23,12 +21,14 @@ class Vista:
         self.cargar_sprites()
 
     def setear_pantalla(self):
+        """Se setea los limites de la pantalla la cual va a ver el usuario"""
         self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
         self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
         self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
 
     def setear_fotos(self):
+        """Cargo todas las fotos en las variables"""
         self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
         self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
         self.fondoTier = self.cargar_foto('imagenes/tierra.png')
@@ -36,8 +36,9 @@ class Vista:
         self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
         self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
 
+
     def cargar_sprites(self):
-        """Se cargarn todos los sprites"""
+        """Se cargan todos los sprites"""
         for fila in self.mapa.get_mapa():
             for celda in fila:
                 celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))
@@ -47,16 +48,13 @@ class Vista:
         personaje = celda.get_personaje()
         personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
 
+
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
         fotoOriginal = pygame.image.load(imagen)
         fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda, self.tamañoFotoCelda))
         return (fotoEscalada)
     
-
-    #def get_celdas_pantalla_totales(self):
-    #    """Devuelvo la cantidad de celdas que entran en la pantalla que ve el usuario"""
-    #    return (self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical)
 
     def mostrar_jugador(self):
         # spawn del jugador
