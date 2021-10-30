@@ -1,5 +1,4 @@
 import pygame
-from pantalla import mapacheto
 from vista import Vista
 from mapa import Mapa
 
@@ -9,8 +8,10 @@ class Juego:
         self.clock = pygame.time.Clock()
         self.tamanioFotoCelda = 20
         self.anchoLargoPantalla = [800, 400]
+        self.celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
+        self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
-        self.vista = Vista(self.mapa,self.get_celdas_totales_pantalla(), self.tamanioFotoCelda, self.anchoLargoPantalla)
+        self.vista = Vista(self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
 
         self.jugar()
 
@@ -26,7 +27,7 @@ class Juego:
                     self.movimiento_pantalla(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1: 
-                        pass
+                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion)
                     elif event.button == 3: 
                         pass
 
@@ -52,19 +53,11 @@ class Juego:
 
 
     def mouse_posicion(self):
-        tamañoCelda = 20
         posXMouse, posYMouse = self.vista.get_mouse_pos()
-        posXCeldas = (posXMouse//tamañoCelda) # Lo escala al tamaño de las celdas
-        posYCeldas = (posYMouse//tamañoCelda)
+        posXCeldas = (posXMouse//self.tamanioFotoCelda) # Lo escala al tamaño de las celdas
+        posYCeldas = (posYMouse//self.tamanioFotoCelda)
         #Todo: falta terminar lo de moverse del personaje
-        return posXCeldas , posYCeldas
-
-
-    def get_celdas_totales_pantalla(self):
-        celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
-        celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
-        self.mapa.playerSpawn(celdasPantallaTotalHorizontal, celdasPantallaTotalVertical)
-        return (celdasPantallaTotalHorizontal, celdasPantallaTotalVertical)
+        return (posXCeldas , posYCeldas)
 
           
 

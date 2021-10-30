@@ -26,9 +26,11 @@ class Personaje:
 
     def get_pos(self):
         return self.posY, self.posX
- 
-    def moverse(self, posicion):
+    
+    def mover_personaje(self, posicionNueva):
         """Genero el moviemiento del personaje haciendo clicks"""
+        self.posY = posicionNueva[1]
+        self.posX = posicionNueva[0]
         #self.mapa.mapaObjetos[self.posicionPersonajeY][self.posicionPersonajeX] = 0 
         #centroPantallaX, centroPantallaY = self.mapa.getCentroPantalla()
         #self.posicionPersonajeX = posXCeldas + centroPantallaX - (self.vista.getCeldasPantallaTotales()[0]) 

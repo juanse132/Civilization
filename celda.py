@@ -9,6 +9,7 @@ class Celda:
         self.recurso= None
         self._sprite = None
         self.url_imagen = None
+        self.personaje = None
 
     def set_sprite(self, sprite):
         self._sprite = sprite
@@ -30,6 +31,11 @@ class Celda:
     
     def get_recurso(self):
         return self.recurso
+    
+    def set_personaje(self, personaje):
+        self.personaje = personaje
 
+    def get_personaje(self):
+        return self.personaje
 
  

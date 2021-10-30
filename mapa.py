@@ -47,48 +47,29 @@ class Mapa():
         return mapa
             
 
-    def get_mapa_recursos(self):
-        return self.mapa_recursos
-
     def get_mapa(self):
         return self.mapa
-    
-
-    def playerSpawn2(self):
-        """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        numX = randint((self.centroPantallaX + 30) - 5 , ((self.centroPantallaX + 50) - 30) + 5)
-        numY = randint((self.centroPantallaY + 20) - 5, ((self.centroPantallaY + 30) - 20) + 5)
-        while self.mapa[numY][numX].isSpawnable() != True: 
-            if self.mapa[numY][numX].isSpawnableRecurso() != True:
-                numX = randint((self.centroPantallaX + 30) - 5, ((self.centroPantallaX + 50) - 30) + 5)
-                numY = randint((self.centroPantallaY + 20) - 5, ((self.centroPantallaY + 30) - 20) + 5) 
-            else:
-                continue
-            
-        self.descubirMapa(numY, numX, 4)
-        print (numY, numX)
-        return numY, numX
-
 
 
     def playerSpawn(self, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical):
         """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        yMinimaPantalla = (celdasPantallaTotalVertical // 2) - 5
-        yMaximaPantalla = (celdasPantallaTotalVertical // 2) + 5
+        yMinimaPantalla = ((self.centroPantallaY - 10) + (celdasPantallaTotalVertical // 2)) + 5
+        yMaximaPantalla = ((self.centroPantallaY - 10) + (celdasPantallaTotalVertical // 2)) - 5
 
-        xMinimaPantala = (celdasPantallaTotalHorizontal // 2) - 5
-        xMaximoPantala = (celdasPantallaTotalHorizontal // 2) + 5
+        
+        xMinimaPantalla =  ((self.centroPantallaX - 20) + (celdasPantallaTotalHorizontal // 2)) + 5
+        xMaximoPantalla =  ((self.centroPantallaX - 20) + (celdasPantallaTotalHorizontal // 2)) - 5
 
-        numX = randint(xMinimaPantala , xMaximoPantala)
+        numX = randint(xMinimaPantalla , xMaximoPantalla)
         numY = randint(yMinimaPantalla, yMaximaPantalla)
-        while self.mapa[numY][numX].isSpawnable() != True or self.mapa[numY][numX].isSpawnableRecurso() != True: 
-            numX = randint(xMinimaPantala, xMaximoPantala)
+        while self.mapa[numY][numX].isSpawnable() != True or self.mapa[numY][numX].isSpawnableRecurso() != True:
+            numX = randint(xMinimaPantalla, xMaximoPantalla)
             numY = randint(yMinimaPantalla, yMaximaPantalla) 
         
             
+        print (numY, numX)
         self.descubirMapa(numY, numX, 4)
         return numY, numX
-
 
 
     def getCentroPantalla(self):
@@ -103,9 +84,6 @@ class Mapa():
                     if 0 < x < self.col:
                         self.mapa[y][x].visibilizar()
    
-
-    def get_recurso(self):
-        return self.recurso
     
     def get_item(self, y, x):
         return self.mapa[y][x]
@@ -121,7 +99,6 @@ class Mapa():
             self.centroPantallaY = self.minNegativoY
         if self.centroPantallaY >= self.maxPositivaY:
             self.centroPantallaY = self.maxPositivaY
-        print(self.centroPantallaY)
             
     def set_centro_pantalla_x(self, numeroNuevoX):
         """Se setea el nuevo centro de la pantalla en el eje X"""
@@ -130,5 +107,4 @@ class Mapa():
             self.centroPantallaX = self.minNegativoX
         if self.centroPantallaX >= self.maxPositivaX:
             self.centroPantallaX = self.maxPositivaX 
-        print(self.centroPantallaX)
         

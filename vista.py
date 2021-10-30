@@ -8,15 +8,15 @@ from pygame.constants import MOUSEBUTTONDOWN
 
 
 class Vista:
-    def __init__(self, mapa_actual, celdasPantallaTotales, tamanioFotoCelda, anchoLargoPantalla) -> None:
+    def __init__(self, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
         pygame.init()
         #anchoPantalla = 800
         #largoPantalla = 400
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
         pygame.display.set_caption('Civilization')
         self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
-        self.celdasPantallaTotalHorizontal = celdasPantallaTotales[0] #40 celdas que entran horizontal en la pantalla
-        self.celdasPantallaTotalVertical = celdasPantallaTotales[1] #20 celdas que entran vertical en la pantalla
+        self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
+        self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
         self.mapa = mapa_actual
         self.setear_pantalla()
         self.setear_fotos()
@@ -44,7 +44,7 @@ class Vista:
                 recurso = celda.get_recurso()
                 if recurso != None:
                     recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
-        personaje = self.mapa.get_personaje()
+        personaje = celda.get_personaje()
         personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
 
     def cargar_foto(self, imagen):
@@ -83,14 +83,16 @@ class Vista:
                     self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 except:
                     pass
+                try:
+                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
+                except:
+                   pass
 
-            
                 forX += 1
 
             forY += 1 
         
     
-
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
 
