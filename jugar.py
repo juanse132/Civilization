@@ -26,8 +26,8 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1: 
-                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion)
+                    if event.button == 1:
+                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion())
                     elif event.button == 3: 
                         pass
 

@@ -89,6 +89,9 @@ class Mapa():
 
     def get_personaje(self):
         return self.personaje
+    
+    def un_set_personaje(self):
+        self.personaje = None
 
 
     def set_centro_pantalla_y(self, numeroNuevoY):

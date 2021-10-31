@@ -38,7 +38,5 @@ class Celda:
     def get_personaje(self):
         return self.personaje
     
-    def un_set_personaje(self):
-        self.personaje = None
 
  
