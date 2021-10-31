@@ -7,7 +7,7 @@ class Personaje:
         self.velocidad = None
         self.celdas_visibles = 4
         self.comida = None
-        self.url_imagen = "Tropas y personajes/3 Man/Man.png"
+        self.url_imagen = "Tropas y personajes/GraveRobber.png"
         self._sprite = None
         self.posX = posicion[1]
         self.posY = posicion[0]
@@ -29,6 +29,6 @@ class Personaje:
     
     def mover_personaje(self, posicionNueva):
         """Cargo la nueva posicion para luego moverme por el mapa"""
-        self.posY = posicionNueva[1]
-        self.posX = posicionNueva[0]
+        self.posY = posicionNueva[0]
+        self.posX = posicionNueva[1]
         # TODO:falta terminar lo de moverse

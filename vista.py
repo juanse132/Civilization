@@ -45,14 +45,14 @@ class Vista:
                 recurso = celda.get_recurso()
                 if recurso != None:
                     recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
-        personaje = celda.get_personaje()
+        personaje = self.mapa.get_personaje()
         personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
 
 
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
         fotoOriginal = pygame.image.load(imagen)
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda, self.tamañoFotoCelda))
+        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda + 2, self.tamañoFotoCelda + 2))
         return (fotoEscalada)
     
 
