@@ -65,7 +65,7 @@ class Mapa():
         while self.mapa[numY][numX].isSpawnable() != True or self.mapa[numY][numX].isSpawnableRecurso() != True:
             numX = randint(xMaximoPantalla , xMinimaPantalla)
             numY = randint(yMaximaPantalla, yMinimaPantalla) 
-        
+        # TODO: Hacer spawn de 3 personajes
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX

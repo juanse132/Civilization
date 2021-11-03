@@ -31,4 +31,4 @@ class Personaje:
         """Cargo la nueva posicion para luego moverme por el mapa"""
         self.posY = posicionNueva[1]
         self.posX = posicionNueva[0]
-        # TODO:falta terminar lo de moverse
+        # TODO:falta terminar lo de moverse, hacer A* tmb

@@ -10,14 +10,13 @@ from pygame.constants import MOUSEBUTTONDOWN
 class Vista:
     def __init__(self, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
+        self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1])) # 800, 400
         pygame.display.set_caption('Civilization')
         self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
         self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
         self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
         self.mapa = mapa_actual
         self.setear_pantalla()
-        self.setear_fotos()
         self.cargar_sprites()
 
     def setear_pantalla(self):
@@ -26,15 +25,6 @@ class Vista:
         self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
         self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
-
-    def setear_fotos(self):
-        """Cargo todas las fotos en las variables"""
-        self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
-        self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
-        self.fondoTier = self.cargar_foto('imagenes/tierra.png')
-        self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
-        self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
-        self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
 
 
     def cargar_sprites(self):

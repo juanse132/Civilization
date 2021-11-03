@@ -10,7 +10,6 @@ class Montaña(Celda):
         self.url_imagen = "imagenes/montaña.jpg"
         self.set_piedra()
     
-
     def isSpawnable(self):
         return False
 
@@ -30,7 +29,6 @@ class Montaña(Celda):
     def get_recurso(self):
         return self.recurso
 
-    
     def isSpawnableRecurso(self):
         if self.recurso == None:
             return True
