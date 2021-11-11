@@ -27,8 +27,10 @@ class Personaje:
     def get_pos(self):
         return self.posY, self.posX
     
-    def mover_personaje(self, posicionNueva):
+    def mover_personaje(self, posicionNueva, mapa):
         """Cargo la nueva posicion para luego moverme por el mapa"""
-        self.posY = posicionNueva[1]
-        self.posX = posicionNueva[0]
+        mapa.get_item(self.posY, self.posX).un_set_personaje()
+        self.posY = posicionNueva[1] 
+        self.posX = posicionNueva[0] 
+        mapa.get_item(self.posY, self.posX).set_personaje(self)
         # TODO:falta terminar lo de moverse, hacer A* tmb

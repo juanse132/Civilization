@@ -11,7 +11,7 @@ class Juego:
         self.celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
-        self.vista = Vista(self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
+        self.vista = Vista(self.mapa, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
 
         self.jugar()
 
@@ -25,16 +25,17 @@ class Juego:
                     exit()
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
+                    self.vista.actualizar_pantalla(self.setear_pantalla())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
-                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion())
+                        if self.mapa.get_item(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
+                            self.mapa.get_personaje().mover_personaje(self.mouse_posicion(), self.mapa)
                     elif event.button == 3: 
                         pass
 
             self.vista.mostrar_mapa()
-            self.vista.mostrar_jugador()            
+            self.vista.mostrar_jugador()
             
-
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)
@@ -55,10 +56,19 @@ class Juego:
     def mouse_posicion(self):
         """Saco la posicion del mouse y la transformo a celda para luego mover al personaje"""
         posXMouse, posYMouse = self.vista.get_mouse_pos()
-        posXCeldas = (posXMouse//self.tamanioFotoCelda) # Lo escala al tamaño de las celdas
-        posYCeldas = (posYMouse//self.tamanioFotoCelda)
+        posXCeldas = (posXMouse//self.tamanioFotoCelda) + self.xMinimo# Lo escala al tamaño de las celdas
+        posYCeldas = (posYMouse//self.tamanioFotoCelda) + self.yMinimo
         #Todo: falta terminar lo de moverse del personaje
         return (posXCeldas , posYCeldas)
+
+
+    def setear_pantalla(self):
+            """Se setea los limites de la pantalla la cual va a ver el usuario"""
+            self.yMinimo = self.mapa.getCentroMapa()[1] - (self.celdasPantallaTotalVertical//2) #40
+            self.yMaximo = self.mapa.getCentroMapa()[1] + (self.celdasPantallaTotalVertical//2) #60
+            self.xMinimo = self.mapa.getCentroMapa()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
+            self.xMaximo = self.mapa.getCentroMapa()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
+            return self.yMinimo, self.yMaximo, self.xMinimo, self.xMaximo
 
           
 

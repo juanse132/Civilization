@@ -8,23 +8,24 @@ from pygame.constants import MOUSEBUTTONDOWN
 
 
 class Vista:
-    def __init__(self, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
+    def __init__(self, mapa_actual, tamanioFotoCelda, anchoLargoPantalla, limites) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1])) # 800, 400
         pygame.display.set_caption('Civilization')
         self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
-        self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
-        self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
+        #self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
+        #self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
+        self.recuadro = self.cargar_foto("imagenes/Recuadro_rojo.png")
         self.mapa = mapa_actual
-        self.setear_pantalla()
+        self.actualizar_pantalla(limites)
         self.cargar_sprites()
 
-    def setear_pantalla(self):
+    def actualizar_pantalla(self, cosa):
         """Se setea los limites de la pantalla la cual va a ver el usuario"""
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
+        self.yMinimo = cosa[0]
+        self.yMaximo = cosa[1]
+        self.xMinimo = cosa[2]
+        self.xMaximo = cosa[3]
 
 
     def cargar_sprites(self):
@@ -42,7 +43,7 @@ class Vista:
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
         fotoOriginal = pygame.image.load(imagen)
-        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda + 2, self.tamañoFotoCelda + 2))
+        fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda , self.tamañoFotoCelda))
         return (fotoEscalada)
     
 
@@ -50,37 +51,34 @@ class Vista:
         # spawn del jugador
         personaje = self.mapa.get_personaje()
         self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
-
-    def set_nuevos_limites(self):
-        """Seteo los nuevos limites para redibujar el mapa"""
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) 
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) 
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) 
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)       
+    
+    def get_mouse_pos(self):
+        return pygame.mouse.get_pos()
 
     def mostrar_mapa(self):
         """Dibujo el mapa con todos los sprites juntos"""  
         forY = 0
-        self.set_nuevos_limites()
-        for y in range(self.anchoMinimo, self.anchoMaximo):
+        for y in range(self.yMinimo, self.yMaximo):
             forX = 0
-            for x in range(self.largoMinimo, self.largoMaximo):
+            for x in range(self.xMinimo, self.xMaximo):
                 
-                self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                self.screen.blit(self.mapa.get_item(y, x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+
                 try:
-                    self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                    self.screen.blit(self.mapa.get_item(y, x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 except:
                     pass
                 try:
-                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
+                    self.screen.blit(self.mapa.get_item(y, x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
                 except:
                    pass
-
+                
                 forX += 1
 
             forY += 1 
+        self.mostar_recuadro()
+
         
-    
-    def get_mouse_pos(self):
-        return pygame.mouse.get_pos()
+    def mostar_recuadro(self):
+        self.screen.blit(self.recuadro, ((self.get_mouse_pos()[0] // self.tamañoFotoCelda)*self.tamañoFotoCelda, (self.get_mouse_pos()[1]// self.tamañoFotoCelda)*self.tamañoFotoCelda))
 
