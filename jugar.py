@@ -31,10 +31,12 @@ class Juego:
                         if self.mapa.get_item(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
                             self.mapa.get_personaje().mover_personaje(self.mouse_posicion(), self.mapa)
                     elif event.button == 3: 
-                        pass
+                        if self.mapa.get_item(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
+                            self.mapa.get_guerrero().mover_guerrero(self.mouse_posicion(), self.mapa)
 
             self.vista.mostrar_mapa()
             self.vista.mostrar_jugador()
+            self.vista.mostrar_guerrero()
             
             pygame.display.flip()
             pygame.display.update()

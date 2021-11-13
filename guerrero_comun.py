@@ -1,7 +1,11 @@
 from personaje import Personaje
 
 class Guererro_comun(Personaje):
-
+    def __init__(self, posicion):
+        super().__init__(posicion)
+        self.url_imagen = "Tropas y personajes/SteamMan.png"
+    
+    
     def defender(self):
         pass
 

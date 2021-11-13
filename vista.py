@@ -38,12 +38,15 @@ class Vista:
                     recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
         personaje = self.mapa.get_personaje()
         personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
+        guerrero = self.mapa.get_guerrero()
+        guerrero.set_sprite(self.cargar_foto(guerrero.get_url_imagen()))
 
 
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
         fotoOriginal = pygame.image.load(imagen)
         fotoEscalada = pygame.transform.scale(fotoOriginal, (self.tamañoFotoCelda , self.tamañoFotoCelda))
+
         return (fotoEscalada)
     
 
@@ -51,6 +54,12 @@ class Vista:
         # spawn del jugador
         personaje = self.mapa.get_personaje()
         self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
+    
+
+    def mostrar_guerrero(self):
+        # spawn del guerrero
+        guerrero = self.mapa.get_guerrero()
+        self.screen.blit(guerrero.get_sprite(), (guerrero.get_pos()[1] * self.tamañoFotoCelda , guerrero.get_pos()[0] * self.tamañoFotoCelda ))
     
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
@@ -70,6 +79,10 @@ class Vista:
                     pass
                 try:
                     self.screen.blit(self.mapa.get_item(y, x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
+                except:
+                   pass
+                try:
+                    self.screen.blit(self.mapa.get_item(y, x).get_guerrero().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
                 except:
                    pass
                 

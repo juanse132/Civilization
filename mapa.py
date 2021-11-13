@@ -5,7 +5,7 @@ from montaña import Montaña
 from tierra import Tierra
 from water import Agua
 from personaje import Personaje
-
+from guerrero_comun import Guererro_comun
 
 
 class Mapa():
@@ -13,10 +13,14 @@ class Mapa():
         self.centroMapaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroMapaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
-        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion 
-        spawn = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)     
+        self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) # Le asigno un valor a cada posicion 
+        spawn = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)
+        spawn2 = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)
+        spawn3 = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)     
         self.personaje = Personaje(spawn)
-        self.mapa[spawn[0]][spawn[1]].set_personaje(self.personaje)
+        self.mapa[spawn[0]][spawn[1]].set_personaje(self.personaje) # Cargo un personaje con esa posicion ramdom sacada antes  
+        self.guerrero = Guererro_comun(spawn2)
+        self.mapa[spawn2[0]][spawn2[1]].set_guerrero(self.guerrero)
 
     def maximo_minimo_pantalla(self):
 
@@ -53,12 +57,12 @@ class Mapa():
 
     def playerSpawn(self, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical):
         """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        yMinimaPantalla = ((self.centroMapaY - 10) + (celdasPantallaTotalVertical // 2)) + 2
-        yMaximaPantalla = ((self.centroMapaY - 10)  + (celdasPantallaTotalVertical // 2)) - 2
+        yMinimaPantalla = ((self.centroMapaY - 10) + (celdasPantallaTotalVertical // 2)) + 4
+        yMaximaPantalla = ((self.centroMapaY - 10)  + (celdasPantallaTotalVertical // 2)) - 4
 
         
-        xMinimaPantalla =  ((self.centroMapaX - 20)  + (celdasPantallaTotalHorizontal // 2)) + 2
-        xMaximoPantalla =  ((self.centroMapaX - 20) + (celdasPantallaTotalHorizontal // 2)) - 2
+        xMinimaPantalla =  ((self.centroMapaX - 20)  + (celdasPantallaTotalHorizontal // 2)) + 4
+        xMaximoPantalla =  ((self.centroMapaX - 20) + (celdasPantallaTotalHorizontal // 2)) - 4
 
         
         numX = randint(xMaximoPantalla , xMinimaPantalla)
@@ -91,6 +95,9 @@ class Mapa():
 
     def get_personaje(self):
         return self.personaje
+
+    def get_guerrero(self):
+        return self.guerrero
 
 
     def set_centro_pantalla_y(self, numeroNuevoY):
