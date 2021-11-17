@@ -29,17 +29,11 @@ class Personaje:
     
     def mover_personaje(self, posicionNueva, mapa):
         """Cargo la nueva posicion del personaje para luego moverme por el mapa"""
-        mapa.get_item(self.posY, self.posX).un_set_personaje()
+        mapa.get_celda(self.posY, self.posX).un_set_personaje()
         self.posY = posicionNueva[1] 
         self.posX = posicionNueva[0] 
-        mapa.get_item(self.posY, self.posX).set_personaje(self)
+        mapa.get_celda(self.posY, self.posX).set_personaje(self)
         # TODO:falta terminar lo de moverse, hacer A* tmb
 
 
-    def mover_guerrero(self, posicionNueva, mapa):
-        """Cargo la nueva posicion del guerrero para luego moverme por el mapa"""
-        mapa.get_item(self.posY, self.posX).un_set_guerrero()
-        self.posY = posicionNueva[1] 
-        self.posX = posicionNueva[0] 
-        mapa.get_item(self.posY, self.posX).set_guerrero(self)
         

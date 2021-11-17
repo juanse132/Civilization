@@ -1,6 +1,6 @@
-from personaje import Personaje
+from personaje import Guerrero
 
-class Obrero(Personaje):
+class Obrero(Guerrero):
 
     def __init__(self):
         self.tarea = None

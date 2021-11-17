@@ -12,6 +12,7 @@ class Juego:
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
         self.vista = Vista(self.mapa, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
+        self.posMovPersonaje = None
 
         self.jugar()
 
@@ -27,17 +28,17 @@ class Juego:
                     self.movimiento_pantalla(event.key)
                     self.vista.actualizar_pantalla(self.setear_pantalla())
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        if self.mapa.get_item(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
-                            self.mapa.get_personaje().mover_personaje(self.mouse_posicion(), self.mapa)
-                    elif event.button == 3: 
-                        if self.mapa.get_item(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
-                            self.mapa.get_guerrero().mover_guerrero(self.mouse_posicion(), self.mapa)
-
-            self.vista.mostrar_mapa()
-            self.vista.mostrar_jugador()
-            self.vista.mostrar_guerrero()
+                    if event.button == 3: 
+                        print(self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje())
+                        self.posMovPersonaje = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje()
+                    if self.posMovPersonaje:
+                        if event.button == 1:
+                            if self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
+                                self.posMovPersonaje.mover_personaje(self.mouse_posicion(), self.mapa)
             
+            
+            self.vista.mostrar_mapa()
+
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)

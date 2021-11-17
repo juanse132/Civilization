@@ -10,7 +10,6 @@ class Celda:
         self._sprite = None
         self.url_imagen = None
         self.personaje = None
-        self.guerrero = None
 
     def set_sprite(self, sprite):
         self._sprite = sprite
@@ -41,15 +40,6 @@ class Celda:
 
     def un_set_personaje(self):
         self.personaje = None
-
-    def set_guerrero(self, guerrero):
-        self.guerrero = guerrero
-
-    def get_guerrero(self):
-        return self.guerrero
-
-    def un_set_guerrero(self):
-        self.guerrero = None
 
     def isSpawnable(self):
         return True

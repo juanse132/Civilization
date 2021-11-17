@@ -14,13 +14,14 @@ class Mapa():
         self.centroMapaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) # Le asigno un valor a cada posicion 
+        self.personaje = self.crear_personaje(Personaje, celdastotaleXPantalla, celdastotalesYPantalla)
+        self.guerrero = self.crear_personaje(Guererro_comun, celdastotaleXPantalla, celdastotalesYPantalla)
+
+    def crear_personaje(self, personaje_clase, celdastotaleXPantalla, celdastotalesYPantalla): 
         spawn = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)
-        spawn2 = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)
-        spawn3 = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)     
-        self.personaje = Personaje(spawn)
-        self.mapa[spawn[0]][spawn[1]].set_personaje(self.personaje) # Cargo un personaje con esa posicion ramdom sacada antes  
-        self.guerrero = Guererro_comun(spawn2)
-        self.mapa[spawn2[0]][spawn2[1]].set_guerrero(self.guerrero)
+        personaje = personaje_clase(spawn)
+        self.mapa[spawn[0]][spawn[1]].set_personaje(personaje) # Cargo un personaje con esa posicion ramdom sacada antes  
+        return personaje
 
     def maximo_minimo_pantalla(self):
 
@@ -89,16 +90,8 @@ class Mapa():
                         self.mapa[y][x].visibilizar()
    
     
-    def get_item(self, y, x):
-        #ymin, xmin tiene que estar en celdas, no tiene que estar en pixeles.
+    def get_celda(self, y, x):
         return self.mapa[y][x]
-
-    def get_personaje(self):
-        return self.personaje
-
-    def get_guerrero(self):
-        return self.guerrero
-
 
     def set_centro_pantalla_y(self, numeroNuevoY):
         """Se setea el nuevo centro de la pantalla en el eje Y"""

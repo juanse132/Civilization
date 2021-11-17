@@ -36,10 +36,11 @@ class Vista:
                 recurso = celda.get_recurso()
                 if recurso != None:
                     recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
-        personaje = self.mapa.get_personaje()
-        personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
-        guerrero = self.mapa.get_guerrero()
-        guerrero.set_sprite(self.cargar_foto(guerrero.get_url_imagen()))
+                personaje = celda.get_personaje()
+                if personaje != None:
+                    personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
+        #personaje = self.mapa.get_personaje()
+        
 
 
     def cargar_foto(self, imagen):
@@ -50,16 +51,7 @@ class Vista:
         return (fotoEscalada)
     
 
-    def mostrar_jugador(self):
-        # spawn del jugador
-        personaje = self.mapa.get_personaje()
-        self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
     
-
-    def mostrar_guerrero(self):
-        # spawn del guerrero
-        guerrero = self.mapa.get_guerrero()
-        self.screen.blit(guerrero.get_sprite(), (guerrero.get_pos()[1] * self.tamañoFotoCelda , guerrero.get_pos()[0] * self.tamañoFotoCelda ))
     
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
@@ -71,18 +63,14 @@ class Vista:
             forX = 0
             for x in range(self.xMinimo, self.xMaximo):
                 
-                self.screen.blit(self.mapa.get_item(y, x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                self.screen.blit(self.mapa.get_celda(y, x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
 
                 try:
-                    self.screen.blit(self.mapa.get_item(y, x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                    self.screen.blit(self.mapa.get_celda(y, x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
                 except:
                     pass
                 try:
-                    self.screen.blit(self.mapa.get_item(y, x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
-                except:
-                   pass
-                try:
-                    self.screen.blit(self.mapa.get_item(y, x).get_guerrero().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
+                    self.screen.blit(self.mapa.get_celda(y, x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
                 except:
                    pass
                 
