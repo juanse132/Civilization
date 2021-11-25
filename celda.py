@@ -5,7 +5,6 @@ class Celda:
         # TODO: areglar lo de que no se vea el mapa
         self.visible = is_visible
         self.tamañaoCelda = 20
-        self.objetos = []
         self.recurso= None
         self._sprite = None
         self.url_imagen = None
@@ -32,6 +31,9 @@ class Celda:
     def get_recurso(self):
         return self.recurso
     
+    def un_set_recurso(self):
+        self.recurso = None
+    
     def set_personaje(self, personaje):
         self.personaje = personaje
 
@@ -42,7 +44,22 @@ class Celda:
         self.personaje = None
 
     def isSpawnable(self):
-        return True
-    
+        """Verifico si hay un recurso o un personaje en la celda para posteriormente mover al personaje por el mapa"""
+        if not self.recurso and not self.personaje:
+            return True
+        else:
+            return False
+        
+    def minar_recurso(self, personaje):
+        """
+        Mino el recurso que tiene la celda, guardando el tipo y la cantidad que se consiguio
+        luego me traigo que personaje mino ese recurso, para posteriormente agregar la cantidad del recurso minado a su inventario
+        y ya luego quito el recurso del mapa
+        """
+        cantidad, tipo = self.recurso.minar()
+        personaje.agregar_recurso(tipo, cantidad)
+        self.un_set_recurso()
+        
 
- 
+
+    

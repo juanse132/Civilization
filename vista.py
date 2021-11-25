@@ -39,7 +39,6 @@ class Vista:
                 personaje = celda.get_personaje()
                 if personaje != None:
                     personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
-        #personaje = self.mapa.get_personaje()
         
 
 
@@ -52,12 +51,11 @@ class Vista:
     
 
     
-    
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
 
     def mostrar_mapa(self):
-        """Dibujo el mapa con todos los sprites juntos"""  
+        """Dibujo el mapa con todos los sprites juntos en la pantalla que ve el usuario"""  
         forY = 0
         for y in range(self.yMinimo, self.yMaximo):
             forX = 0

@@ -12,7 +12,8 @@ class Juego:
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
         self.vista = Vista(self.mapa, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
-        self.posMovPersonaje = None
+        self.posMovPersonaje = self.mapa.get_personaje_inicial()
+        self.recursoAMinar = None
 
         self.jugar()
 
@@ -20,7 +21,6 @@ class Juego:
     def jugar(self): 
         while True:   
             for event in pygame.event.get():
-                rightClicking = False
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
@@ -29,12 +29,20 @@ class Juego:
                     self.vista.actualizar_pantalla(self.setear_pantalla())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3: 
-                        print(self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje())
                         self.posMovPersonaje = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje()
+                    if event.button == 2:
+                        self.recursoAMinar = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_recurso()
                     if self.posMovPersonaje:
                         if event.button == 1:
                             if self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
-                                self.posMovPersonaje.mover_personaje(self.mouse_posicion(), self.mapa)
+                                self.posMovPersonaje.mover_personaje(self.mouse_posicion(), self.mapa) 
+                            if self.recursoAMinar:
+                                self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.posMovPersonaje)
+                                self.vista.mostrar_mapa()
+                                self.recursoAMinar = None
+                                print(self.posMovPersonaje.get_inventario())
+
+                    
             
             
             self.vista.mostrar_mapa()
@@ -61,7 +69,6 @@ class Juego:
         posXMouse, posYMouse = self.vista.get_mouse_pos()
         posXCeldas = (posXMouse//self.tamanioFotoCelda) + self.xMinimo# Lo escala al tamaño de las celdas
         posYCeldas = (posYMouse//self.tamanioFotoCelda) + self.yMinimo
-        #Todo: falta terminar lo de moverse del personaje
         return (posXCeldas , posYCeldas)
 
 

@@ -5,26 +5,26 @@ from montaña import Montaña
 from tierra import Tierra
 from water import Agua
 from personaje import Personaje
-from guerrero_comun import Guererro_comun
+from guerrero_comun import Guerrero_comun
 
 
 class Mapa():
-    def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
+    def __init__(self, celdastotalesXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
         self.centroMapaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroMapaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) # Le asigno un valor a cada posicion 
-        self.personaje = self.crear_personaje(Personaje, celdastotaleXPantalla, celdastotalesYPantalla)
-        self.guerrero = self.crear_personaje(Guererro_comun, celdastotaleXPantalla, celdastotalesYPantalla)
+        self.personaje = self.crear_personaje(Personaje, celdastotalesXPantalla, celdastotalesYPantalla)
+        self.guerrero = self.crear_personaje(Guerrero_comun, celdastotalesXPantalla, celdastotalesYPantalla)
 
-    def crear_personaje(self, personaje_clase, celdastotaleXPantalla, celdastotalesYPantalla): 
-        spawn = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)
+    def crear_personaje(self, personaje_clase, celdastotalesXPantalla, celdastotalesYPantalla): 
+        """Creo un personaje con una posicion aleatoria en el mapa, de preferencia es centrado en la pantalla que ve el usuario"""
+        spawn = self.playerSpawn(celdastotalesXPantalla, celdastotalesYPantalla)
         personaje = personaje_clase(spawn)
-        self.mapa[spawn[0]][spawn[1]].set_personaje(personaje) # Cargo un personaje con esa posicion ramdom sacada antes  
+        self.mapa[spawn[0]][spawn[1]].set_personaje(personaje) # Cargo un personaje con esa posicion en el mapa  
         return personaje
 
     def maximo_minimo_pantalla(self):
-
         """Establezco los limites para no pasarme a la hora de mover la camara"""
         self.maxPositivaY = 90
         self.minNegativoY = 10
@@ -92,6 +92,9 @@ class Mapa():
     
     def get_celda(self, y, x):
         return self.mapa[y][x]
+
+    def get_personaje_inicial(self):
+        return self.personaje
 
     def set_centro_pantalla_y(self, numeroNuevoY):
         """Se setea el nuevo centro de la pantalla en el eje Y"""
