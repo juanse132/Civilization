@@ -13,8 +13,6 @@ class Vista:
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1])) # 800, 400
         pygame.display.set_caption('Civilization')
         self.tamañoFotoCelda = tamanioFotoCelda # en pixeles
-        #self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
-        #self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
         self.recuadro = self.cargar_foto("imagenes/Recuadro_rojo.png")
         self.mapa = mapa_actual
         self.actualizar_pantalla(limites)
@@ -39,8 +37,7 @@ class Vista:
                 personaje = celda.get_personaje()
                 if personaje != None:
                     personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
-        
-
+    
 
     def cargar_foto(self, imagen):
         """Cargo todas las fotos y las escalo al tamaño de las celdas de la matriz"""
@@ -50,9 +47,9 @@ class Vista:
         return (fotoEscalada)
     
 
-    
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
+
 
     def mostrar_mapa(self):
         """Dibujo el mapa con todos los sprites juntos en la pantalla que ve el usuario"""  
@@ -81,3 +78,15 @@ class Vista:
     def mostar_recuadro(self):
         self.screen.blit(self.recuadro, ((self.get_mouse_pos()[0] // self.tamañoFotoCelda)*self.tamañoFotoCelda, (self.get_mouse_pos()[1]// self.tamañoFotoCelda)*self.tamañoFotoCelda))
 
+
+    def mostar_inventario_personajes(self, personaje):
+        BLANCO = (255, 255, 255)
+        pos =  400
+        fuente = pygame.font.SysFont(None, 30)
+        for resources, resources_value in personaje.get_inventario().items():
+            txt = resources + ": " + str(resources_value)
+            texto = fuente.render(txt, True, BLANCO)
+            self.screen.blit(texto, (pos, 10))
+            pos += 100
+
+                   

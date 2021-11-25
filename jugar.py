@@ -40,12 +40,12 @@ class Juego:
                                 self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.posMovPersonaje)
                                 self.vista.mostrar_mapa()
                                 self.recursoAMinar = None
-                                print(self.posMovPersonaje.get_inventario())
 
                     
             
             
             self.vista.mostrar_mapa()
+            self.vista.mostar_inventario_personajes(self.posMovPersonaje)
 
             pygame.display.flip()
             pygame.display.update()
