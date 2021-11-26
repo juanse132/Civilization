@@ -7,6 +7,7 @@ from water import Agua
 from personaje import Personaje
 from guerrero_comun import Guerrero_comun
 from aldeana import Aldeana
+from aldeano import Aldeano
 
 class Mapa():
     def __init__(self, celdastotalesXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
@@ -14,7 +15,7 @@ class Mapa():
         self.centroMapaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) # Le asigno un valor a cada posicion 
-        self.personaje = self.crear_personaje(Personaje, celdastotalesXPantalla, celdastotalesYPantalla)
+        self.personaje = self.crear_personaje(Aldeano, celdastotalesXPantalla, celdastotalesYPantalla)
         self.guerrero = self.crear_personaje(Guerrero_comun, celdastotalesXPantalla, celdastotalesYPantalla)
         self.aldeana = self.crear_personaje(Aldeana, celdastotalesXPantalla, celdastotalesYPantalla)
 
