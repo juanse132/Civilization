@@ -41,3 +41,9 @@ class Personaje:
 
     def get_inventario(self):
         return self.inventario
+
+    def isMiniable(self):
+        return True
+
+    def minar_vaca(self):
+        return False

@@ -12,7 +12,7 @@ class Tierra(Celda):
         self.url_imagen = "imagenes/tierra.png"
         self.set_arbol()
         self.set_arbusto()
-        
+        self.set_vacas()
     
     def tiempo(self):
         return self.velocidad
@@ -31,8 +31,18 @@ class Tierra(Celda):
         """Se setean los arbustos con probabilidades"""
         from arbusto import Arbusto
         num = randint(9,100)
-        if num > 96:
+        if num > 92:
             self.recurso = Arbusto()
+            return True
+        else:
+            return False
+
+    def set_vacas(self):
+        """Se setean las vacas con probabilidades"""
+        from vaca import Vaca
+        num = randint(0,100)
+        if num > 99:
+            self.recurso = Vaca()
             return True
         else:
             return False

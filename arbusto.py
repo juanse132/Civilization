@@ -4,7 +4,7 @@ from random import randint
 class Arbusto(Celda):
     def __init__(self, is_visible=False) -> None:
         super().__init__(is_visible=False)
-        self.cantidadComidaOtorgada = [60, 20, 50, 70, 35]
+        self.cantidadComidaOtorgada = [3, 20, 8, 13, 11]
         self.url_imagen= "imagenes/arbusto_nuevo.png"
 
     def minar(self):

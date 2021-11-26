@@ -1,7 +1,7 @@
 
 
 class Celda:
-    def __init__(self, is_visible=True):
+    def __init__(self, is_visible=False):
         # TODO: areglar lo de que no se vea el mapa
         self.visible = is_visible
         self.tamañaoCelda = 20
@@ -22,9 +22,6 @@ class Celda:
     def get_tamaño(self):
         return self.tamañaoCelda
 
-    def hayCuidad(self):
-        pass
-    
     def visibilizar(self):
         self.visible = True
     
@@ -56,10 +53,10 @@ class Celda:
         luego me traigo que personaje mino ese recurso, para posteriormente agregar la cantidad del recurso minado a su inventario
         y ya luego quito el recurso del mapa
         """
-        cantidad, tipo = self.recurso.minar()
-        personaje.agregar_recurso(tipo, cantidad)
-        self.un_set_recurso()
-        
+        if personaje.isMiniable() == True:
+            cantidad, tipo = self.recurso.minar()
+            personaje.agregar_recurso(tipo, cantidad)
+            self.un_set_recurso()
 
 
     

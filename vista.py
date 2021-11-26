@@ -80,13 +80,14 @@ class Vista:
 
 
     def mostar_inventario_personajes(self, personaje):
+        """Muestro el inventario de cada personaje en la pantalla"""
         BLANCO = (255, 255, 255)
-        pos =  400
-        fuente = pygame.font.SysFont(None, 30)
-        for resources, resources_value in personaje.get_inventario().items():
-            txt = resources + ": " + str(resources_value)
+        pos =  380
+        fuente = pygame.font.SysFont(None, 23)
+        for recurso, valor_recurso in personaje.get_inventario().items():
+            txt = recurso + ": " + str(valor_recurso)
             texto = fuente.render(txt, True, BLANCO)
-            self.screen.blit(texto, (pos, 10))
-            pos += 100
+            self.screen.blit(texto, (pos, 17))
+            pos += 110
 
                    

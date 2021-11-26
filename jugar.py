@@ -38,14 +38,17 @@ class Juego:
                                 self.posMovPersonaje.mover_personaje(self.mouse_posicion(), self.mapa) 
                             if self.recursoAMinar:
                                 self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.posMovPersonaje)
-                                self.vista.mostrar_mapa()
                                 self.recursoAMinar = None
+                                self.vista.mostrar_mapa()
 
                     
             
             
             self.vista.mostrar_mapa()
-            self.vista.mostar_inventario_personajes(self.posMovPersonaje)
+            try:
+                self.vista.mostar_inventario_personajes(self.posMovPersonaje)
+            except:
+                pass
 
             pygame.display.flip()
             pygame.display.update()

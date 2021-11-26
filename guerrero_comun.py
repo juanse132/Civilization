@@ -4,10 +4,10 @@ class Guerrero_comun(Personaje):
     def __init__(self, posicion):
         super().__init__(posicion)
         self.url_imagen = "Tropas y personajes/SteamMan.png"
+        self.inventario = None
     
-    
-    def defender(self):
-        pass
+    def isMiniable(self):
+        return False
 
     def atacar(self):
         pass

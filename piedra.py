@@ -5,7 +5,7 @@ from random import randint
 class Piedra(Celda):
     def __init__(self, is_visible=False) -> None:
         super().__init__(is_visible=False)
-        self.cantidadHierroPiedraOtorgada = [10, 20, 5, 15, 30, 40, 25, 6, 35, 60]
+        self.cantidadHierroPiedraOtorgada = [10, 20, 5, 15, 4, 40, 12, 6, 8, 3]
         self.tipos = ["hierro", "piedra"]
         self.url_imagen = "imagenes/piedra3.png"
 

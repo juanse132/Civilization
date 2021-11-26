@@ -6,7 +6,7 @@ from tierra import Tierra
 from water import Agua
 from personaje import Personaje
 from guerrero_comun import Guerrero_comun
-
+from aldeana import Aldeana
 
 class Mapa():
     def __init__(self, celdastotalesXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
@@ -16,6 +16,7 @@ class Mapa():
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) # Le asigno un valor a cada posicion 
         self.personaje = self.crear_personaje(Personaje, celdastotalesXPantalla, celdastotalesYPantalla)
         self.guerrero = self.crear_personaje(Guerrero_comun, celdastotalesXPantalla, celdastotalesYPantalla)
+        self.aldeana = self.crear_personaje(Aldeana, celdastotalesXPantalla, celdastotalesYPantalla)
 
     def crear_personaje(self, personaje_clase, celdastotalesXPantalla, celdastotalesYPantalla): 
         """Creo un personaje con una posicion aleatoria en el mapa, de preferencia es centrado en la pantalla que ve el usuario"""
@@ -41,9 +42,9 @@ class Mapa():
             mapa.append([])
             for j in range(col):
                 num = randint(0,100)
-                if num<5:
+                if num<8:
                     tipo = tipos[0]
-                elif num>98:
+                elif num>97:
                     tipo = tipos[1]
                 else:
                     tipo = tipos[2]
@@ -58,12 +59,12 @@ class Mapa():
 
     def playerSpawn(self, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical):
         """Se genera el spawn del personaje aleatoriamente en el centro de la pantalla"""
-        yMinimaPantalla = ((self.centroMapaY - 10) + (celdasPantallaTotalVertical // 2)) + 4
-        yMaximaPantalla = ((self.centroMapaY - 10)  + (celdasPantallaTotalVertical // 2)) - 4
+        yMinimaPantalla = ((self.centroMapaY - 10) + (celdasPantallaTotalVertical // 2)) + 2
+        yMaximaPantalla = ((self.centroMapaY - 10)  + (celdasPantallaTotalVertical // 2)) - 2
 
         
-        xMinimaPantalla =  ((self.centroMapaX - 20)  + (celdasPantallaTotalHorizontal // 2)) + 4
-        xMaximoPantalla =  ((self.centroMapaX - 20) + (celdasPantallaTotalHorizontal // 2)) - 4
+        xMinimaPantalla =  ((self.centroMapaX - 20)  + (celdasPantallaTotalHorizontal // 2)) + 2
+        xMaximoPantalla =  ((self.centroMapaX - 20) + (celdasPantallaTotalHorizontal // 2)) - 2
 
         
         numX = randint(xMaximoPantalla , xMinimaPantalla)
@@ -71,7 +72,6 @@ class Mapa():
         while self.mapa[numY][numX].isSpawnable() != True:
             numX = randint(xMaximoPantalla , xMinimaPantalla)
             numY = randint(yMaximaPantalla, yMinimaPantalla) 
-        # TODO: Hacer spawn de 3 personajes
             
         self.descubirMapa(numY, numX, 4)
         return numY, numX
@@ -85,8 +85,8 @@ class Mapa():
         """Se descubre el mapa a medida que el personaje avanza"""
         for y in range((posPersonajeY + visibilidad), (posPersonajeY - visibilidad)):
             for x in range((posPersonajeX + visibilidad), (posPersonajeX - visibilidad)):
-                if 0 < y < self.fila:
-                    if 0 < x < self.col:
+                if 0 < y < self.centroMapaY:
+                    if 0 < x < self.centroMapaX:
                         self.mapa[y][x].visibilizar()
    
     
