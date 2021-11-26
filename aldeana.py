@@ -6,5 +6,5 @@ class Aldeana(Personaje):
         self.url_imagen = "Tropas y personajes/Woman.png"
     
  
-    def minar_vaca(self):
+    def matar_vaca(self):
         return True

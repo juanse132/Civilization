@@ -45,5 +45,3 @@ class Personaje:
     def isMiniable(self):
         return True
 
-    def minar_vaca(self):
-        return False

@@ -12,6 +12,4 @@ class Vaca(Celda):
     def minar(self):
         return self.cantidadComidaOtorgada[randint(0, 2)], "comida"
 
-    def isMiniable(self):
-        return False
 

@@ -12,7 +12,7 @@ class Juego:
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
         self.vista = Vista(self.mapa, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
-        self.posMovPersonaje = self.mapa.get_personaje_inicial()
+        self.personajeSeleccionado = self.mapa.get_personaje_inicial()
         self.recursoAMinar = None
 
         self.jugar()
@@ -29,15 +29,15 @@ class Juego:
                     self.vista.actualizar_pantalla(self.setear_pantalla())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3: 
-                        self.posMovPersonaje = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje()
+                        self.personajeSeleccionado = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_personaje()
                     if event.button == 2:
                         self.recursoAMinar = self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).get_recurso()
-                    if self.posMovPersonaje:
+                    if self.personajeSeleccionado:
                         if event.button == 1:
                             if self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).isSpawnable() == True:
-                                self.posMovPersonaje.mover_personaje(self.mouse_posicion(), self.mapa) 
+                                self.personajeSeleccionado.mover_personaje(self.mouse_posicion(), self.mapa) 
                             if self.recursoAMinar:
-                                self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.posMovPersonaje)
+                                self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.personajeSeleccionado)
                                 self.recursoAMinar = None
                                 self.vista.mostrar_mapa()
 
@@ -46,7 +46,7 @@ class Juego:
             
             self.vista.mostrar_mapa()
             try:
-                self.vista.mostar_inventario_personajes(self.posMovPersonaje)
+                self.vista.mostar_inventario_personajes(self.personajeSeleccionado)
             except:
                 pass
 

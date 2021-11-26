@@ -5,4 +5,3 @@ class Aldeano(Personaje):
         super().__init__(posicion)
         self.url_imagen = "Tropas y personajes/GraveRobber.png"
     
- 
