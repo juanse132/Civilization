@@ -12,4 +12,5 @@ class Vaca(Celda):
     def minar(self):
         return self.cantidadComidaOtorgada[randint(0, 2)], "comida"
 
-
+    def matable_por(self):
+        return "aldeana"

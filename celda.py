@@ -53,10 +53,8 @@ class Celda:
         luego me traigo que personaje mino ese recurso, para posteriormente agregar la cantidad del recurso minado a su inventario
         y ya luego quito el recurso del mapa
         """
-        if personaje.isMiniable() == True:
-            cantidad, tipo = self.recurso.minar()
-            personaje.agregar_recurso(tipo, cantidad)
-            self.un_set_recurso()
+        personaje.minar(self, self.recurso)
+
 
 
     

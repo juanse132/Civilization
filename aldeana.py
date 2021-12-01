@@ -5,6 +5,4 @@ class Aldeana(Personaje):
         super().__init__(posicion)
         self.url_imagen = "Tropas y personajes/Woman.png"
     
- 
-    def matar_vaca(self):
-        return True
+

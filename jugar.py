@@ -40,16 +40,15 @@ class Juego:
                                 self.mapa.get_celda(self.mouse_posicion()[1], self.mouse_posicion()[0]).minar_recurso(self.personajeSeleccionado)
                                 self.recursoAMinar = None
                                 self.vista.mostrar_mapa()
+                                
+
 
                     
             
             
             self.vista.mostrar_mapa()
-            try:
-                self.vista.mostar_inventario_personajes(self.personajeSeleccionado)
-            except:
-                pass
-
+            self.vista.mostar_inventario_personajes(self.personajeSeleccionado)
+            
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)

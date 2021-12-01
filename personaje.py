@@ -34,7 +34,6 @@ class Personaje:
         self.posX = posicionNueva[0] 
         mapa.get_celda(self.posY, self.posX).set_personaje(self)
 
-
     def agregar_recurso(self, tipo, cantidad):
         """Agrego al inventario del personaje la cantidad de recurso que consiguio minando"""
         self.inventario[tipo] += cantidad
@@ -42,6 +41,8 @@ class Personaje:
     def get_inventario(self):
         return self.inventario
 
-    def isMiniable(self):
-        return True
-
+    
+    def minar(self, celda, recurso):
+        cantidad, tipo = recurso.minar()
+        self.agregar_recurso(tipo, cantidad)
+        celda.un_set_recurso()

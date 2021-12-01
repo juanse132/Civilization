@@ -84,10 +84,13 @@ class Vista:
         BLANCO = (255, 255, 255)
         pos =  380
         fuente = pygame.font.SysFont(None, 23)
-        for recurso, valor_recurso in personaje.get_inventario().items():
-            txt = recurso + ": " + str(valor_recurso)
-            texto = fuente.render(txt, True, BLANCO)
-            self.screen.blit(texto, (pos, 17))
-            pos += 110
-
+        try: 
+            if personaje.get_inventario():
+                for recurso, valor_recurso in personaje.get_inventario().items():
+                    txt = recurso + ": " + str(valor_recurso)
+                    texto = fuente.render(txt, True, BLANCO)
+                    self.screen.blit(texto, (pos, 17))
+                    pos += 110
+        except:
+            pass
                    
